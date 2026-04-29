@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
 import { togglePinAction, deleteProjectAction } from "@/features/project/api/project-actions";
 import type { ProjectMeta } from "@/entities/project/model";
+import { ROUTES } from "@/shared/config/routes";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -47,11 +48,12 @@ export default function AdminProjectRow({
 
   return (
     <li className="py-3 px-3 flex items-center justify-between">
-      <span
-        className="cursor-pointer hover:underline"
+      <Link
+        href={`${ROUTES.WORK}/${project.id}`}
+        className="hover:underline text-sm"
       >
         {project.title}
-      </span>
+      </Link>
 
       <div className="flex gap-2">
         <Button

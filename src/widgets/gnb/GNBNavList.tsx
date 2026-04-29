@@ -84,25 +84,25 @@ const GNBNavList = () => {
       <div
         ref={menuWrapperRef}
         className={cn(
-          "fixed right-0 top-0 w-4/5 md:w-2/4 max-w-[600px] h-screen z-[900] bg-zinc-900 text-zinc-100 px-10 pt-10 pb-20 flex flex-col shadow-2xl",
+          "fixed right-0 top-0 w-full h-screen z-[900] bg-zinc-900/95 text-zinc-100 px-10 pt-8 pb-16 flex flex-col shadow-2xl",
           !view && "translate-x-full"
         )}
         style={{
-          backdropFilter: "blur(10px)",
+          backdropFilter: "blur(12px)",
         }}
       >
-        <div className="flex justify-end mb-10">
-          <X className="size-10 cursor-pointer" onClick={closeMenu} />
+        <div className="flex justify-end">
+          <X className="size-8 cursor-pointer" onClick={closeMenu} />
         </div>
 
-        <div className="flex flex-col gap-8 text-right mt-10">
+        <div className="flex flex-col gap-10 items-center justify-center flex-1">
           {NAVPAGE_OBJECT.map((e, idx) => {
             if (!authentication && e.AuthPage) return null;
             return (
               <div
                 key={idx}
                 className={cn(
-                  "text-3xl md:text-4xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors",
+                  "text-4xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors tracking-wide",
                   e.path === pathname && "text-pink-400 underline"
                 )}
                 onClick={() => {
@@ -119,7 +119,7 @@ const GNBNavList = () => {
           })}
           {authentication && (
             <span
-              className="text-3xl md:text-3xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors"
+              className="text-4xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors tracking-wide"
               onClick={async () => {
                 await mutateAsync();
                 removeAuth();
@@ -129,7 +129,7 @@ const GNBNavList = () => {
             >
               LogOut
             </span>
-          )}{" "}
+          )}
         </div>
       </div>
 

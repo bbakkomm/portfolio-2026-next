@@ -32,6 +32,7 @@ import dynamic from "next/dynamic";
 import { ROUTES } from "@/shared/config/routes";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
 
 const DynamicEditor = dynamic(() => import("./DynamicEditor"), { ssr: false });
 
@@ -101,8 +102,9 @@ export default function ProjectForm({
             ? new Date(initialData.end_date as string)
             : null,
         },
-        contents:
-          (initialData as any).project_contents?.[0]?.contents ?? "",
+        contents: normalizeContentHtml(
+          (initialData as any).project_contents?.[0]?.contents ?? ""
+        ),
       });
 
       if ((initialData as any).img_key) {

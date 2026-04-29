@@ -1,12 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Link2, ChevronLeft, Loader2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
-import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
 import imgUrlMapper from "@/shared/lib/img-url";
+
 import type { ProjectDetailFull, STACK_TYPES } from "@/entities/project/model";
+
+const DynamicProjectContent = dynamic(
+  () => import("./DynamicProjectContent"),
+  { ssr: false }
+);
 import { ROUTES } from "@/shared/config/routes";
 import useStore from "@/shared/store/useStore";
 import { useTransition } from "react";
@@ -147,18 +153,6 @@ function TechStack({
   );
 }
 
-function ProjectContent({ contents }: { contents: string | undefined }) {
-  if (!contents || contents.length <= 10) return null;
-
-  return (
-    <section>
-      <div
-        className="prose dark:prose-invert prose-sm max-w-none break-keep leading-loose prose-p:leading-loose prose-li:leading-loose"
-        dangerouslySetInnerHTML={{ __html: normalizeContentHtml(contents) }}
-      />
-    </section>
-  );
-}
 
 // ── Main Component ─────────────────────────────────────────────
 
@@ -231,7 +225,9 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
             <TechStack stacks={project.project_meta_stack} />
           )}
         </div>
-        <ProjectContent contents={project.project_contents?.[0]?.contents} />
+        {project.project_contents?.[0]?.contents && project.project_contents[0].contents.length > 10 && (
+          <DynamicProjectContent contents={project.project_contents[0].contents} />
+        )}
       </div>
     </section>
   );
