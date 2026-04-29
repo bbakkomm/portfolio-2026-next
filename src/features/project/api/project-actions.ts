@@ -2,16 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/shared/lib/supabase/server";
+import { requireAdmin } from "@/shared/lib/supabase/require-admin";
 
 export async function togglePinAction(
   projectId: number,
   currentlyPinned: boolean
 ): Promise<void> {
+  await requireAdmin();
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("권한이 없습니다.");
 
   if (currentlyPinned) {
     const { error } = await supabase
@@ -32,11 +30,8 @@ export async function togglePinAction(
 }
 
 export async function deleteProjectAction(projectId: number): Promise<void> {
+  await requireAdmin();
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("권한이 없습니다.");
 
   const { error } = await supabase
     .from("project_meta")

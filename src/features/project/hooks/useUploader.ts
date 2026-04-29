@@ -65,8 +65,8 @@ async function convertToWebP(
 export function useUploader(imgKey: string) {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (file: File): Promise<string> => {
-      if (!file.type.startsWith("image/")) {
-        throw new Error("이미지 파일만 업로드 가능합니다.");
+      if (!file.type.startsWith("image/") || file.type === "image/svg+xml") {
+        throw new Error("이미지 파일만 업로드 가능합니다. (SVG 제외)");
       }
 
       const sizeMb = file.size / 1024 / 1024;

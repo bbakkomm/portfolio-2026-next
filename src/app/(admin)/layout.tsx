@@ -1,19 +1,18 @@
 import { redirect } from "next/navigation";
 import { GNB } from "@/widgets/gnb/GNB";
 import { Footer } from "@/widgets/footer/Footer";
-import { createClient } from "@/shared/lib/supabase/server";
+import { requireAdmin } from "@/shared/lib/supabase/require-admin";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/");
+  try {
+    await requireAdmin();
+  } catch {
+    redirect("/");
+  }
 
   return (
     <div className="min-h-screen bg-[#171717]">

@@ -11,10 +11,10 @@ import HomeSectionTitle from "./HomeSectionTitle";
 
 const aboutData = [
   {
-    title: "2019",
-    targetValue: 2019,
+    title: "2017",
+    targetValue: 2017,
     description:
-      "2019년 웹 퍼블리싱으로 입문한 뒤 React와 Next.js로 전향하며 프론트엔드 역량을 꾸준히 확장해왔습니다.",
+      "2017년 웹 퍼블리싱으로 입문한 뒤 Php를 거쳐 React와 Next.js로 전향하며 프론트엔드 역량을 꾸준히 확장해왔습니다.",
     suffix: "~",
   },
   {

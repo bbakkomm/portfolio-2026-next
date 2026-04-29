@@ -25,7 +25,6 @@ import { toast } from "sonner";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProjectThumbnailUploader from "./ProjectThumbnailUploader";
-import { createClient } from "@/shared/lib/supabase/client";
 import type { ProjectPostProps } from "@/entities/project/model";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
@@ -33,7 +32,7 @@ import { ROUTES } from "@/shared/config/routes";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
-import { revalidateProjectAction } from "@/features/project/api/project-actions";
+import { upsertProjectAction } from "@/features/project/api/upsert-project-action";
 
 const DynamicEditor = dynamic(() => import("./DynamicEditor"), { ssr: false });
 
@@ -114,9 +113,9 @@ export default function ProjectForm({
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (body: z.infer<typeof projectSchema>) => {
-      const supabase = createClient();
-
-      const metaPayload = {
+      await upsertProjectAction({
+        mode,
+        projectId,
         title: body.title,
         company: body.company,
         description: body.description,
@@ -128,83 +127,20 @@ export default function ProjectForm({
         end_date: body.workRange.end
           ? format(body.workRange.end, "yyyy. MM. dd")
           : null,
-        thumbnail: body.thumbnail,
+        thumbnail: body.thumbnail ?? "",
         img_key: imgKey,
-      };
-
-      let resolvedProjectId: number;
-
-      if (mode === "add") {
-        const { data: inserted, error } = await supabase
-          .from("project_meta")
-          .insert(metaPayload)
-          .select("id")
-          .single();
-        if (error) throw new Error(error.message);
-        resolvedProjectId = inserted.id;
-      } else {
-        const { error } = await supabase
-          .from("project_meta")
-          .update(metaPayload)
-          .eq("id", projectId!);
-        if (error) throw new Error(error.message);
-        resolvedProjectId = projectId!;
-      }
-
-      // project_contents: add는 insert, edit는 update
-      if (mode === "add") {
-        const { error: contentsError } = await supabase
-          .from("project_contents")
-          .insert({ project_id: resolvedProjectId, contents: body.contents });
-        if (contentsError) throw new Error(contentsError.message);
-      } else {
-        const { error: contentsError } = await supabase
-          .from("project_contents")
-          .update({ contents: body.contents })
-          .eq("project_id", resolvedProjectId);
-        if (contentsError) throw new Error(contentsError.message);
-      }
-
-      // project_surmmry: 삭제 후 재삽입
-      await supabase
-        .from("project_surmmry")
-        .delete()
-        .eq("project_id", resolvedProjectId);
-
-      if (body.surmmry.length > 0) {
-        const { error } = await supabase.from("project_surmmry").insert(
-          body.surmmry.map((s) => ({
-            project_id: resolvedProjectId,
-            summary: s.contents,
-          }))
-        );
-        if (error) throw new Error(error.message);
-      }
-
-      // project_meta_stack: 삭제 후 stack_id로 직접 삽입
-      await supabase
-        .from("project_meta_stack")
-        .delete()
-        .eq("project_id", resolvedProjectId);
-
-      if (body.useStack.length > 0) {
-        const { error } = await supabase.from("project_meta_stack").insert(
-          body.useStack.map((stackId) => ({
-            project_id: resolvedProjectId,
-            stack_id: stackId,
-          }))
-        );
-        if (error) throw new Error(error.message);
-      }
+        contents: body.contents,
+        surmmry: body.surmmry,
+        useStack: body.useStack,
+      });
     },
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success(
         mode === "add"
           ? "프로젝트가 등록 되었습니다."
           : "프로젝트가 수정 되었습니다."
       );
       form.reset();
-      await revalidateProjectAction(projectId);
       router.push(ROUTES.ADMIN);
     },
     onError: (error: Error) => {
