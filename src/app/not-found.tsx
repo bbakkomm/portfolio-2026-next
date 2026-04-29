@@ -20,7 +20,10 @@ export default function NotFound() {
         variant="outline"
         className="rounded-full p-6"
         onClick={() => {
-          if (window.history.length > 1) {
+          const isSameOrigin =
+            document.referrer &&
+            new URL(document.referrer).origin === window.location.origin;
+          if (isSameOrigin) {
             router.back();
           } else {
             router.push("/");
