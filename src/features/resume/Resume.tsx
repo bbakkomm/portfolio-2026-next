@@ -5,17 +5,12 @@ import ResumeExperience from "./ResumeExperience";
 import ResumeEducation from "./ResumeEducation";
 import ResumeStack from "./ResumeStack";
 import { ROUTES } from "@/shared/config/routes";
+import PageBackdrop from "@/shared/components/page-backdrop";
 
 const Resume = () => {
   return (
     <div className="relative bg-[#171717] overflow-hidden">
-      {/* 배경 */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-60"
-        style={{ backgroundImage: "url(/img/heros/rt_01.jpg)" }}
-      >
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717]" />
-      </div>
+      <PageBackdrop imageSrc="/img/heros/rt_01.jpg" />
 
       <div className="flex-1 grid-layout pt-28 md:pt-36 pb-24 text-base leading-relaxed break-keep">
         <div className="relative z-10 max-w-[1100px]">

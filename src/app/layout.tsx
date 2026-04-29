@@ -4,6 +4,8 @@ import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "sonner";
 import { MSWInitializer } from "@/mocks/msw-initializer";
 import { TooltipProvider } from "@/shared/ui/tooltip";
+import { GsapProvider } from "@/shared/providers/gsap-provider";
+import TopButton from "@/shared/components/top-button";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://psh-portfolio.vercel.app";
 
@@ -35,11 +37,14 @@ export default function RootLayout({
     <html lang="ko" className="dark">
       <body className="bg-[#171717] text-foreground min-h-screen font-pretendard">
         <QueryProvider>
-          <TooltipProvider>
-            <MSWInitializer />
-            {children}
-            <Toaster richColors theme="dark" />
-          </TooltipProvider>
+          <GsapProvider>
+            <TooltipProvider>
+              <MSWInitializer />
+              {children}
+              <Toaster richColors theme="dark" />
+              <TopButton />
+            </TooltipProvider>
+          </GsapProvider>
         </QueryProvider>
       </body>
     </html>

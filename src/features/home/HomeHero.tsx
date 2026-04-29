@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
+import FallingStarsEffect from "@/shared/effects/falling-stars";
 
 const mainText = "항상 탐구하는 개발자";
 const titlePre = "Front-end ";
@@ -39,6 +40,8 @@ export default function HomeHero() {
           </div>
         </motion.div>
       </div>
+
+      <FallingStarsEffect />
 
       <section className="overflow-hidden relative">
         <div className="grid-layout md:grid flex pt-60 md:pt-75">

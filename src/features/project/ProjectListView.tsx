@@ -10,6 +10,7 @@ import imgUrlMapper from "@/shared/lib/img-url";
 import type { ProjectMeta } from "@/entities/project/model";
 import { ROUTES } from "@/shared/config/routes";
 import { Skeleton } from "@/shared/ui/skeleton";
+import PageBackdrop from "@/shared/components/page-backdrop";
 
 const PAGE_SIZE = 6;
 
@@ -123,12 +124,7 @@ export default function ProjectListView({ projects }: { projects: ProjectMeta[] 
 
   return (
     <div className="relative bg-[#171717] overflow-hidden">
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-60"
-        style={{ backgroundImage: "url(/img/heros/rt_03.webp)" }}
-      >
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717]" />
-      </div>
+      <PageBackdrop imageSrc="/img/heros/rt_03.webp" />
 
       <div className="relative flex flex-col grid-layout pt-50 md:pt-60 z-5">
         {/* 헤더 */}

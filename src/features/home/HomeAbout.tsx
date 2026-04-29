@@ -6,7 +6,6 @@ import { SquareMousePointer, Code2, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
 import { cn } from "@/shared/lib/cn";
-import HomeStackGraph from "./HomeStackGraph";
 
 const aboutData = [
   {
@@ -169,13 +168,6 @@ export default function HomeAbout() {
               ))}
             </motion.div>
 
-            <motion.div
-              initial={H}
-              animate={inView ? V : H}
-              transition={{ duration: 0.6, delay: 0.25 }}
-            >
-              <HomeStackGraph />
-            </motion.div>
           </div>
         </div>
       </div>
