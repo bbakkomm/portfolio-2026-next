@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LogOut, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { useStore } from "@/shared/store/useStore";
+import useStore from "@/shared/store/useStore";
 
 interface NavPage {
   path: string;

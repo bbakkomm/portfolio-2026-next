@@ -35,7 +35,7 @@ export const projectHandlers = [
 
   // POST - 프로젝트 생성
   http.post(`${SUPABASE_URL}/rest/v1/project_meta*`, async ({ request }) => {
-    const body = await request.json();
+    const body = (await request.json()) as Record<string, unknown>;
     return HttpResponse.json(
       { ...body, id: Date.now() },
       { status: 201 }
