@@ -8,7 +8,13 @@ import { cn } from "@/shared/lib/cn";
 import { togglePinAction, deleteProjectAction } from "@/features/project/api/project-actions";
 import type { ProjectMeta } from "@/entities/project/model";
 
-export default function AdminProjectRow({ project }: { project: ProjectMeta }) {
+export default function AdminProjectRow({
+  project,
+  pinOrder,
+}: {
+  project: ProjectMeta;
+  pinOrder?: number | null;
+}) {
   const projectPin = (project as any).project_pin;
   const isPinned = Array.isArray(projectPin) ? projectPin.length > 0 : !!projectPin;
   const [pinned, setPinned] = useState(isPinned);
@@ -49,7 +55,7 @@ export default function AdminProjectRow({ project }: { project: ProjectMeta }) {
             <Loader2 className="size-3 animate-spin" />
           ) : pinned ? (
             <>
-              <Pin className="size-3" /> 고정 중
+              <Pin className="size-3" /> 고정 중{pinOrder != null ? ` #${pinOrder}` : ""}
             </>
           ) : (
             "고정"

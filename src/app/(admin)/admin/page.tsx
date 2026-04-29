@@ -8,6 +8,13 @@ export const metadata = { title: "Admin" };
 export default async function AdminPage() {
   const projects = await getProjectsForAdmin();
 
+  const pinOrderMap = new Map(
+    projects
+      .filter((p) => (p as any).project_pin != null)
+      .sort((a, b) => ((a as any).project_pin.id ?? 0) - ((b as any).project_pin.id ?? 0))
+      .map((p, i) => [p.id, i + 1])
+  );
+
   return (
     <div className="grid-layout pt-50 pb-20">
       <h1 className="text-4xl font-bold mb-10">Admin Page</h1>
@@ -27,7 +34,11 @@ export default async function AdminPage() {
         ) : (
           <ul className="divide-y divide-border">
             {projects.map((project) => (
-              <AdminProjectRow key={project.id} project={project} />
+              <AdminProjectRow
+                key={project.id}
+                project={project}
+                pinOrder={pinOrderMap.get(project.id) ?? null}
+              />
             ))}
           </ul>
         )}

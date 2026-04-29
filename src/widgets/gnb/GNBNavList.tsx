@@ -29,6 +29,7 @@ const GNBNavList = () => {
   const router = useRouter();
   const pathname = usePathname();
   const authentication = useStore((s) => s.authentication);
+  const removeAuth = useStore((s) => s.removeAuth);
 
   const [isPC, setIsPC] = useState(false);
 
@@ -121,6 +122,7 @@ const GNBNavList = () => {
               className="text-3xl md:text-3xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors"
               onClick={async () => {
                 await mutateAsync();
+                removeAuth();
                 closeMenu();
                 router.push("/");
               }}
@@ -213,6 +215,7 @@ const GNBNavList = () => {
               <div
                 onClick={async () => {
                   await mutateAsync();
+                  removeAuth();
                   router.push("/");
                 }}
                 className="bg-transparent! transition-all duration-100 group p-2 h-auto rounded-lg border border-zinc-50/10 hover:border-indigo-200/50"

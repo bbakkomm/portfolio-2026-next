@@ -20,7 +20,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
       <div className="pr-15">
         <aside className="lg:sticky lg:top-40 flex flex-col items-start">
           <div className="leading-relaxed max-w-[360px] mb-6 items-start flex flex-col">
-            <h2 className="pb-1 text-zinc-200 text-2xl">pinned project</h2>
+            <h2 className="pb-1 text-zinc-200 text-2xl font-semibold">Pinned Project</h2>
             <p className="text-sm leading-relaxed text-zinc-400">
               React·Next.js 기반으로 진행한 주요 프로젝트입니다. 최신 스택을
               사용하며 기술적 완성도를 높이는 데 집중했습니다.

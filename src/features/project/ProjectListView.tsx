@@ -139,7 +139,7 @@ export default function ProjectListView({
   }, [isLoadingMore, filteredProjects.length]);
 
   return (
-    <div className="relative bg-[#171717] overflow-hidden">
+    <div className="relative bg-[#171717] overflow-clip">
       <PageBackdrop imageSrc="/img/heros/rt_03.webp" />
 
       <div className="relative flex flex-col grid-layout pt-50 md:pt-60 z-5">
