@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { pretendard, montserrat, poppins, bebas, bruno, brunoSC, nexon } from "@/shared/styles/fonts";
 import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "sonner";
 import { MSWInitializer } from "@/mocks/msw-initializer";
@@ -35,7 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="dark">
+    <html
+      lang="ko"
+      className={`dark ${[pretendard, montserrat, poppins, bebas, bruno, brunoSC, nexon].map((f) => f.variable).join(" ")}`}
+    >
       <body className="bg-[#171717] text-foreground min-h-screen font-pretendard" suppressHydrationWarning>
         <QueryProvider>
           <GsapProvider>

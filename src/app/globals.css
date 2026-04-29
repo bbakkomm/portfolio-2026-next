@@ -5,15 +5,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ─── Web Fonts ───────────────────────────────────────────────── */
+/* Pretendard·Montserrat·Poppins·Bebas·Bruno·BrunoSC·NEXON:
+   next/font/local으로 관리 (src/shared/styles/fonts.ts).
+   CSS 변수(--font-*-var)는 html 요소에 주입됨.               */
 
-@font-face {
-  font-family: "Pretendard Variable";
-  src: url("/fonts/PretendardVariable.woff2") format("woff2");
-  font-weight: 200 900;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* SUIT: CDN 전용, next/font/local 파일 없음 */
 @font-face {
   font-family: "SUIT-Regular";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
@@ -23,105 +19,18 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Bold.woff2") format("woff2");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins-Bold.woff2") format("woff2");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BebasNeue-Regular";
-  src: url("/fonts/BebasNeue-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BebasNeue";
-  src: url("/fonts/BebasNeue-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BrunoAce";
-  src: url("/fonts/BrunoAce-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BrunoAceSC";
-  src: url("/fonts/BrunoAceSC-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "NEXONLv1Gothic";
-  src: url("/fonts/NEXONLv1GothicLight.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "NEXONLv1Gothic";
-  src: url("/fonts/NEXONLv1GothicRegular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "NEXONLv1Gothic";
-  src: url("/fonts/NEXONLv1GothicBold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ─── Font Tokens ─────────────────────────────────────────────── */
 
 @theme {
-  --font-suit: "SUIT-Regular", "Pretendard Variable", "Apple SD Gothic Neo",
+  --font-suit: "SUIT-Regular", var(--font-pretendard-var), "Apple SD Gothic Neo",
     "Malgun Gothic", sans-serif;
-  --font-pretendard: "Pretendard Variable", sans-serif;
-  --font-poppins: "Poppins", sans-serif;
-  --font-montserrat: "Montserrat", sans-serif;
-  --font-bebas: "BebasNeue", sans-serif;
-  --font-bruno: "BrunoAce", sans-serif;
-  --font-brunoSC: "BrunoAceSC", sans-serif;
-  --font-nexon: "NEXONLv1Gothic", "Pretendard Variable", sans-serif;
+  --font-pretendard: var(--font-pretendard-var), sans-serif;
+  --font-poppins: var(--font-poppins-var), sans-serif;
+  --font-montserrat: var(--font-montserrat-var), sans-serif;
+  --font-bebas: var(--font-bebas-var), sans-serif;
+  --font-bruno: var(--font-bruno-var), sans-serif;
+  --font-brunoSC: var(--font-brunosc-var), sans-serif;
+  --font-nexon: var(--font-nexon-var), var(--font-pretendard-var), sans-serif;
 }
 
 /* ─── Design Tokens ───────────────────────────────────────────── */
