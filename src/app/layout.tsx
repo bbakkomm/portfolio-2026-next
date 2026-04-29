@@ -3,6 +3,7 @@ import "./globals.css";
 import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "sonner";
 import { MSWInitializer } from "@/mocks/msw-initializer";
+import { TooltipProvider } from "@/shared/ui/tooltip";
 
 export const metadata: Metadata = {
   title: { default: "Portfolio", template: "%s | Portfolio" },
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang="ko" className="dark">
       <body className="bg-[#171717] text-foreground min-h-screen">
         <QueryProvider>
-          <MSWInitializer />
-          {children}
-          <Toaster richColors theme="dark" />
+          <TooltipProvider>
+            <MSWInitializer />
+            {children}
+            <Toaster richColors theme="dark" />
+          </TooltipProvider>
         </QueryProvider>
       </body>
     </html>
