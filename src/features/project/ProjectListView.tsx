@@ -83,14 +83,16 @@ export default function ProjectListView({
     [pinnedProjects]
   );
 
-  // 사용 가능한 스택 목록 추출 (project_meta_stack 기반)
+  // 사용 가능한 스택 목록 추출 (pinned 제외, project_meta_stack 기반)
   const availableStacks = useMemo(() => {
     const stackSet = new Set<string>();
-    projects.forEach((p) =>
-      p.project_meta_stack?.forEach((s) => stackSet.add(s.project_stack.stack))
-    );
+    projects
+      .filter((p) => !pinnedIds.has(p.id))
+      .forEach((p) =>
+        p.project_meta_stack?.forEach((s) => stackSet.add(s.project_stack.stack))
+      );
     return Array.from(stackSet).sort();
-  }, [projects]);
+  }, [projects, pinnedIds]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
