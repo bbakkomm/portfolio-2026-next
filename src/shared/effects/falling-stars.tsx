@@ -1,29 +1,47 @@
 "use client";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import gsap from "gsap";
 
 const METEOR_COUNT = 12;
 const STAR_COUNT = 55;
 
-const meteors = Array.from({ length: METEOR_COUNT }, (_, i) => ({
-  id: i,
-  angle: 15 + Math.floor(Math.random() * 25),
-}));
-
-const bgStars = Array.from({ length: STAR_COUNT }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 85,
-  size: 0.5 + Math.random() * 1.8,
-  opacity: 0.2 + Math.random() * 0.6,
-}));
-
 export default function FallingStarsEffect() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const meteors = useMemo(
+    () =>
+      mounted
+        ? Array.from({ length: METEOR_COUNT }, (_, i) => ({
+            id: i,
+            angle: 15 + Math.floor(Math.random() * 25),
+          }))
+        : [],
+    [mounted]
+  );
+
+  const bgStars = useMemo(
+    () =>
+      mounted
+        ? Array.from({ length: STAR_COUNT }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 85,
+            size: 0.5 + Math.random() * 1.8,
+            opacity: 0.2 + Math.random() * 0.6,
+          }))
+        : [],
+    [mounted]
+  );
 
   useGSAP(
     () => {
+      if (!mounted) return;
       const container = containerRef.current;
       if (!container) return;
       const { offsetWidth, offsetHeight } = container;
@@ -70,8 +88,10 @@ export default function FallingStarsEffect() {
         });
       });
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [mounted] }
   );
+
+  if (!mounted) return null;
 
   return (
     <div

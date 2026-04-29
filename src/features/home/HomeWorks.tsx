@@ -20,7 +20,7 @@ export default function HomeWorks({ projects }: { projects: ProjectMeta[] }) {
         animate={inView ? V : H}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-zinc-50 text-5xl leading-relaxed mb-4">Projects</h2>
+        <h2 className="text-zinc-50 font-semibold text-5xl leading-relaxed mb-4">Projects</h2>
         <p className="text-zinc-400 break-keep leading-relaxed max-w-[600px]">
           인터랙티브 웹 퍼블리싱 경험과 React, Next.js 기반의 애플리케이션 개발 경험을 함께 담았습니다.
           기술과 사용자 경험을 함께 고민하며 작업한 결과물입니다.

@@ -50,25 +50,27 @@ export interface ProjectMeta {
   img_key: string;
   hashtag: string[];
   skill: string[];
+  project_meta_stack?: { project_stack: { type: string; stack: string } }[];
 }
 
 // project_contents 테이블
 export interface ProjectContents {
   id: number;
   project_id: number;
-  content: string;
+  contents: string;
 }
 
 // project_surmmry 테이블
 export interface ProjectSurmmry {
   id: number;
   project_id: number;
-  summary: string;
+  title: string;
+  contents: string;
 }
 
 // 상세 조회용 (join 포함)
 export interface ProjectDetailFull extends ProjectMeta {
-  project_contents: ProjectContents | null;
+  project_contents: ProjectContents[];
   project_surmmry: ProjectSurmmry[];
   project_pin: { id: number } | null;
   project_meta_stack: Array<{

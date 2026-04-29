@@ -30,6 +30,8 @@ import type { ProjectPostProps } from "@/entities/project/model";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
 import { ROUTES } from "@/shared/config/routes";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 const DynamicEditor = dynamic(() => import("./DynamicEditor"), { ssr: false });
 
@@ -87,7 +89,7 @@ export default function ProjectForm({
         company: initialData.company ?? "",
         members: (initialData as any).project_member ?? "",
         thumbnail: initialData.thumbnail ?? "",
-        url: (initialData as any).projectUrl ?? "",
+        url: (initialData as any).projectUrl ?? (initialData as any).project_url ?? "",
         useStack: stacks,
         surmmry: surmmryList,
         description: initialData.description ?? "",
@@ -218,6 +220,13 @@ export default function ProjectForm({
 
   return (
     <section className="max-w-[800px] mx-auto mb-20 pt-30 px-4">
+      <Link
+        href={ROUTES.ADMIN}
+        className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-50 transition-colors mb-6"
+      >
+        <ChevronLeft size={14} />
+        Admin으로
+      </Link>
       <h1 className="border-foreground/40 text-4xl pb-3 mb-10">
         {mode === "add" ? "프로젝트 등록하기" : "프로젝트 수정하기"}
       </h1>

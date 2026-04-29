@@ -11,6 +11,8 @@ import type { ProjectMeta } from "@/entities/project/model";
 import { ROUTES } from "@/shared/config/routes";
 import { Skeleton } from "@/shared/ui/skeleton";
 import PageBackdrop from "@/shared/components/page-backdrop";
+import ProjectPinnedSection from "./ProjectPinnedSection";
+import StackIconMapper from "@/shared/components/stack-icon-mapper";
 
 const PAGE_SIZE = 6;
 
@@ -62,30 +64,44 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
   );
 }
 
-export default function ProjectListView({ projects }: { projects: ProjectMeta[] }) {
+export default function ProjectListView({
+  projects,
+  pinnedProjects = [],
+}: {
+  projects: ProjectMeta[];
+  pinnedProjects?: ProjectMeta[];
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStack, setSelectedStack] = useState<string | null>(null);
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // 사용 가능한 스택 목록 추출 (hashtag 기반)
+  const pinnedIds = useMemo(
+    () => new Set(pinnedProjects.map((p) => p.id)),
+    [pinnedProjects]
+  );
+
+  // 사용 가능한 스택 목록 추출 (project_meta_stack 기반)
   const availableStacks = useMemo(() => {
     const stackSet = new Set<string>();
-    projects.forEach((p) => p.hashtag?.forEach((h) => stackSet.add(h)));
+    projects.forEach((p) =>
+      p.project_meta_stack?.forEach((s) => stackSet.add(s.project_stack.stack))
+    );
     return Array.from(stackSet).sort();
   }, [projects]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      const hashtags = project.hashtag?.map((h) => h.toLowerCase()) ?? [];
+      if (pinnedIds.has(project.id)) return false;
+      const stacks = project.project_meta_stack?.map((s) => s.project_stack.stack.toLowerCase()) ?? [];
 
-      if (selectedStack && !hashtags.includes(selectedStack.toLowerCase())) return false;
+      if (selectedStack && !stacks.includes(selectedStack.toLowerCase())) return false;
 
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const inTitle = project.title?.toLowerCase().includes(q);
         const inDesc = project.description?.toLowerCase().includes(q);
-        const inHashtag = hashtags.some((h) => h.includes(q));
+        const inHashtag = stacks.some((s) => s.includes(q));
         if (!inTitle && !inDesc && !inHashtag) return false;
       }
 
@@ -138,14 +154,17 @@ export default function ProjectListView({ projects }: { projects: ProjectMeta[] 
           </div>
         </section>
 
+        {/* Pinned Projects */}
+        <ProjectPinnedSection projects={pinnedProjects} />
+
         <section className="w-full mt-10 pt-8">
           <div className="mb-5">
             <div className="mb-6">
               <h2 className="text-zinc-50 text-3xl flex gap-2 items-center font-semibold">
-                All Projects
+                Other Projects
               </h2>
               <p className="text-base leading-relaxed text-zinc-400">
-                전체 프로젝트 목록입니다.
+                Pinned를 제외한 전체 프로젝트 목록입니다.
               </p>
             </div>
 
@@ -194,6 +213,7 @@ export default function ProjectListView({ projects }: { projects: ProjectMeta[] 
                           : "border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
                       )}
                     >
+                      <StackIconMapper stackName={stack as any} className="size-3.5" />
                       {stack}
                     </button>
                   );

@@ -6,6 +6,7 @@ import { SquareMousePointer, Code2, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
 import { cn } from "@/shared/lib/cn";
+import HomeSectionTitle from "./HomeSectionTitle";
 
 const aboutData = [
   {
@@ -85,10 +86,9 @@ export default function HomeAbout() {
           transition={{ duration: 0.6 }}
           className="flex flex-col gap-5 items-start"
         >
-          <h2 className="relative inline-block text-3xl leading-relaxed text-zinc-50">
+          <HomeSectionTitle>
             안녕하세요! <br /> <span>프론트엔드 개발자</span> Psh&apos; 입니다.
-            <br />
-          </h2>
+          </HomeSectionTitle>
         </motion.div>
 
         {/* 메인 레이아웃 */}
@@ -125,7 +125,7 @@ export default function HomeAbout() {
               {aboutData.map((e, idx) => (
                 <div key={`${e.title}:${idx}`} className={cn("relative rounded-2xl group flex flex-col")}>
                   <div className="flex items-start justify-between mb-2">
-                    <span className="text-[10px] text-zinc-500 tracking-wider">value 0{idx + 1}</span>
+                    <span className="text-xs text-zinc-500 tracking-wider">value 0{idx + 1}</span>
                   </div>
                   <div className="items-center gap-20">
                     <div className="flex flex-col">
@@ -155,7 +155,7 @@ export default function HomeAbout() {
                 <div key={`${e.title}:${idx}`} className="relative rounded-2xl group">
                   <div className="relative h-full z-10">
                     <div className="flex items-start justify-between mb-2 pb-2">
-                      <span className="text-[10px] text-zinc-500 tracking-wider">value 0{idx + 1}</span>
+                      <span className="text-xs text-zinc-500 tracking-wider">value 0{idx + 1}</span>
                     </div>
                     <div className="flex flex-col gap-4">
                       <h3 className="font-semibold flex gap-3 items-center text-zinc-100 pb-1">

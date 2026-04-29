@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Link2, ChevronLeft } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
 import imgUrlMapper from "@/shared/lib/img-url";
 import type { ProjectDetailFull, STACK_TYPES } from "@/entities/project/model";
 import { ROUTES } from "@/shared/config/routes";
@@ -136,8 +137,8 @@ function ProjectContent({ contents }: { contents: string | undefined }) {
   return (
     <section>
       <div
-        className="prose dark:prose-invert prose-sm max-w-none break-keep"
-        dangerouslySetInnerHTML={{ __html: contents }}
+        className="prose dark:prose-invert prose-sm max-w-none break-keep leading-loose prose-p:leading-loose prose-li:leading-loose"
+        dangerouslySetInnerHTML={{ __html: normalizeContentHtml(contents) }}
       />
     </section>
   );
@@ -165,7 +166,7 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
             startDate={project.start_date}
             endDate={project.end_date}
             member={project.project_member}
-            url={project.projectUrl ?? ""}
+            url={project.projectUrl ?? (project as any).project_url ?? ""}
           />
         </div>
       </div>
@@ -177,7 +178,7 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
             <TechStack stacks={project.project_meta_stack} />
           )}
         </div>
-        <ProjectContent contents={project.project_contents?.content} />
+        <ProjectContent contents={project.project_contents?.[0]?.contents} />
       </div>
     </section>
   );

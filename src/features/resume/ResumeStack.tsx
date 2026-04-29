@@ -1,5 +1,6 @@
 import SectionLabel from "./components/SectionLabel";
 import { TECH_STACK } from "./constants/tech-stack";
+import StackIconMapper from "@/shared/components/stack-icon-mapper";
 
 const ResumeStack = () => (
   <section>
@@ -21,6 +22,7 @@ const ResumeStack = () => (
                 key={bi}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md border border-zinc-700 text-zinc-400"
               >
+                <StackIconMapper stackName={badge.label as any} className="size-3.5" />
                 {badge.label}
               </span>
             ))}

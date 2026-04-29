@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/cn";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import StackIconMapper, { type StackName } from "@/shared/components/stack-icon-mapper";
 import HomeStackGraph from "./HomeStackGraph";
+import HomeSectionTitle from "./HomeSectionTitle";
 
 type StackItem = { name: StackName; description: string };
 type StackGroup = {
@@ -71,9 +72,7 @@ const STACKS: StackGroup[] = [
 export default function HomeStack() {
   return (
     <div className="grid">
-      <h2 className="text-zinc-50 text-3xl font-montserrat font-semibold leading-relaxed mb-5">
-        Stack
-      </h2>
+      <HomeSectionTitle>Stack</HomeSectionTitle>
       <p className="max-w-[80%] md:max-w-[700px] text-base mb-8 text-zinc-400 leading-relaxed break-keep">
         최신 프론트엔드 트렌드를 반영해 구조적 설계와 렌더링 최적화에 집중하고,
         협업과 서비스 품질 향상을 위해 백엔드와 인프라를 함께 이해하며 개발합니다.

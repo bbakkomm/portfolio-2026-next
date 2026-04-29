@@ -1,5 +1,6 @@
 "use client";
 
+import "./editor.css";
 import {
   EditorProvider,
   SimpleEditorContents,

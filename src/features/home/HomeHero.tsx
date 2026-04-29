@@ -1,17 +1,50 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 import { ROUTES } from "@/shared/config/routes";
 import FallingStarsEffect from "@/shared/effects/falling-stars";
+import HeroWorkSummary from "./HeroWorkSummary";
+import SubNav from "@/shared/components/sub-nav";
+import type { ProjectMeta } from "@/entities/project/model";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const mainText = "항상 탐구하는 개발자";
 const titlePre = "Front-end ";
 const titlePost = "Developer";
 
-export default function HomeHero() {
+export default function HomeHero({ recentProjects }: { recentProjects: ProjectMeta[] }) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const pallaxRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      pallaxRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        const depth = idx + 1;
+        const movement = -70 * depth;
+        gsap.to(el, {
+          y: movement,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "center top",
+            scrub: 2,
+          },
+        });
+      });
+    },
+    { scope: sectionRef, revertOnUpdate: true, dependencies: [] }
+  );
+
   return (
-    <>
+    <div ref={sectionRef}>
       {/* Background */}
       <div className="absolute w-full h-lvh overflow-hidden">
         <motion.div
@@ -22,15 +55,18 @@ export default function HomeHero() {
         >
           {/* 하단 이미지 */}
           <div
+            ref={(el) => { pallaxRefs.current[0] = el; }}
             className="absolute inset-0 w-full h-full bg-cover bg-left-top z-0 [background-position-x:70%] xl:[background-position-x:0%]"
             style={{ backgroundImage: "url(/img/heros/bbt_38_1920.webp)" }}
           />
           <div
+            ref={(el) => { pallaxRefs.current[1] = el; }}
             className="absolute inset-0 w-full h-full bg-no-repeat bg-size-[auto_50rem] bg-[0rem_bottom] md:bg-size-[auto_60rem] md:bg-left-bottom xl:bg-cover z-5"
             style={{ backgroundImage: "url(/img/heros/bbt_35_1920.webp)" }}
           />
           {/* PNG 상단 이미지 */}
           <div
+            ref={(el) => { pallaxRefs.current[2] = el; }}
             className="absolute inset-0 w-full h-full bg-cover bg-no-repeat md:bg-bottom z-10"
             style={{ backgroundImage: "url(/img/heros/bbt_34_1920.webp)" }}
           >
@@ -38,10 +74,9 @@ export default function HomeHero() {
             <div className="absolute inset-0 w-full h-full bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717] z-20" />
             <div className="absolute bg-[#171717] w-full h-[500px] top-[99%]"></div>
           </div>
+          <FallingStarsEffect />
         </motion.div>
       </div>
-
-      <FallingStarsEffect />
 
       <section className="overflow-hidden relative">
         <div className="grid-layout md:grid flex pt-60 md:pt-75">
@@ -62,7 +97,7 @@ export default function HomeHero() {
                       animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
                       transition={{ delay: 1.1 + i * 0.03, duration: 0.4, ease: "easeOut" }}
                     >
-                      {ch === " " ? " " : ch}
+                      {ch === " " ? " " : ch}
                     </motion.span>
                   ))}
                 </div>
@@ -78,7 +113,7 @@ export default function HomeHero() {
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ delay: 1.5 + i * 0.035, duration: 0.5, ease: "easeOut" }}
                       >
-                        {ch === " " ? " " : ch}
+                        {ch === " " ? " " : ch}
                       </motion.span>
                     ))}
                   </div>
@@ -92,7 +127,7 @@ export default function HomeHero() {
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ delay: 1.7 + i * 0.035, duration: 0.5, ease: "easeOut" }}
                       >
-                        {ch === " " ? " " : ch}
+                        {ch === " " ? " " : ch}
                       </motion.span>
                     ))}
                   </div>
@@ -124,24 +159,30 @@ export default function HomeHero() {
               animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
               transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }}
             >
-              <div className="flex gap-4">
-                <Link
-                  href={ROUTES.WORK}
-                  className="text-sm text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-400 rounded-full px-4 py-2 transition-colors"
-                >
-                  Work
-                </Link>
-                <Link
-                  href={ROUTES.RESUME}
-                  className="text-sm text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-400 rounded-full px-4 py-2 transition-colors"
-                >
-                  Resume
-                </Link>
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <Link
+                    href={ROUTES.WORK}
+                    className="text-sm text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-400 rounded-full px-4 py-2 transition-colors"
+                  >
+                    Work
+                  </Link>
+                  <Link
+                    href={ROUTES.RESUME}
+                    className="text-sm text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-400 rounded-full px-4 py-2 transition-colors"
+                  >
+                    Resume
+                  </Link>
+                </div>
+                <SubNav />
+              </div>
+              <div className="mt-15 md:mt-auto flex md:justify-end">
+                <HeroWorkSummary projects={recentProjects} />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

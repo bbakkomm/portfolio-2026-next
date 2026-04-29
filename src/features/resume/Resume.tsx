@@ -4,6 +4,7 @@ import ResumeHero from "./ResumeHero";
 import ResumeExperience from "./ResumeExperience";
 import ResumeEducation from "./ResumeEducation";
 import ResumeStack from "./ResumeStack";
+import ResumeAlgorithm from "./ResumeAlgorithm";
 import { ROUTES } from "@/shared/config/routes";
 import PageBackdrop from "@/shared/components/page-backdrop";
 
@@ -27,6 +28,9 @@ const Resume = () => {
             </section>
             <section>
               <ResumeStack />
+            </section>
+            <section>
+              <ResumeAlgorithm />
             </section>
 
             <div className="flex justify-end">

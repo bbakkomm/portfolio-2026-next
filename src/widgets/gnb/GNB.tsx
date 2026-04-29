@@ -13,7 +13,7 @@ export function GNB() {
       >
         <div
           className={cn(
-            "text-white flex items-center layout-center justify-between py-2 px-0 grid-layout mx-auto"
+            "text-white flex items-center layout-center justify-between py-4 px-0 grid-layout mx-auto"
           )}
         >
           {/* Header- Con */}

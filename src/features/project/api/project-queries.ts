@@ -14,7 +14,7 @@ export async function getProjects(): Promise<ProjectMeta[]> {
 
   const { data, error } = await supabase
     .from("project_meta")
-    .select("*")
+    .select("*, project_meta_stack(project_stack(type, stack))")
     .order("id", { ascending: false });
 
   if (error) throw new Error(error.message);
@@ -53,6 +53,38 @@ export async function getProjectDetail(
   }
 
   return data as ProjectDetailFull;
+}
+
+/**
+ * 핀된 프로젝트 목록 조회 (서버 컴포넌트용)
+ * project_pin 테이블을 통해 핀된 project_meta만 반환
+ */
+export async function getPinnedProjects(): Promise<ProjectMeta[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("project_pin")
+    .select(`*, project_meta(*, project_meta_stack(project_stack(type, stack)))`);
+
+  if (error) throw new Error(error.message);
+
+  return ((data ?? []).map((r: any) => r.project_meta).filter(Boolean) as ProjectMeta[]);
+}
+
+/**
+ * Admin 전용 프로젝트 목록 조회 (project_pin 조인 포함)
+ */
+export async function getProjectsForAdmin(): Promise<ProjectMeta[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("project_meta")
+    .select("*, project_pin (id)")
+    .order("id", { ascending: false });
+
+  if (error) throw new Error(error.message);
+
+  return data ?? [];
 }
 
 /**

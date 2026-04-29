@@ -39,18 +39,6 @@ const GNBNavList = () => {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // 홈(/)에서 헤더 페이드인
-  useEffect(() => {
-    if (!headerRef.current || pathname !== "/") return;
-    const el = headerRef.current;
-    el.style.opacity = "0";
-    const timer = setTimeout(() => {
-      el.style.transition = "opacity 0.5s ease";
-      el.style.opacity = "1";
-    }, 2400);
-    return () => clearTimeout(timer);
-  }, [pathname]);
-
   // PC에선 모바일 메뉴 닫기
   useEffect(() => {
     if (isPC) closeMenu();
