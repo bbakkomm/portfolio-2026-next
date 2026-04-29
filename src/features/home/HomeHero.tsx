@@ -15,7 +15,7 @@ import type { ProjectMeta } from "@/entities/project/model";
 gsap.registerPlugin(ScrollTrigger);
 
 const mainText = "항상 탐구하는 개발자";
-const titlePre = "Front-end ";
+const titlePre = "Front-end";
 const titlePost = "Developer";
 
 export default function HomeHero({ recentProjects }: { recentProjects: ProjectMeta[] }) {
@@ -102,7 +102,7 @@ export default function HomeHero({ recentProjects }: { recentProjects: ProjectMe
                   ))}
                 </div>
 
-                <div className="flex flex-col md:flex-row font-bold">
+                <div className="flex flex-col md:flex-row md:gap-x-3 font-bold">
                   {/* Front-end */}
                   <div className="w-full flex mt-3 text-zinc-50 font-montserrat">
                     {titlePre.split("").map((ch, i) => (
@@ -160,7 +160,7 @@ export default function HomeHero({ recentProjects }: { recentProjects: ProjectMe
               transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }}
             >
               <div className="flex flex-col gap-4">
-                <div className="flex gap-4">
+                {/* <div className="flex gap-4">
                   <Link
                     href={ROUTES.WORK}
                     className="text-sm text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-400 rounded-full px-4 py-2 transition-colors"
@@ -173,7 +173,7 @@ export default function HomeHero({ recentProjects }: { recentProjects: ProjectMe
                   >
                     Resume
                   </Link>
-                </div>
+                </div> */}
                 <SubNav />
               </div>
               <div className="mt-15 md:mt-auto flex md:justify-end">

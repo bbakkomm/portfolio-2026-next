@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useScrollFadeIn } from "@/shared/hooks/useScrollFadeIn";
 import { useRef } from "react";
 import type { ProjectMeta } from "@/entities/project/model";
 import CarouselOrientation from "./CarouselOrientation";
@@ -10,7 +11,7 @@ const V = { opacity: 1, y: 0, filter: "blur(0px)" };
 
 export default function HomeWorks({ projects }: { projects: ProjectMeta[] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "0px 0px -10% 0px" });
+  const inView = useScrollFadeIn(ref, "0px 0px -10% 0px");
 
   return (
     <div ref={ref} className="flex flex-col gap-10 pt-20">

@@ -15,8 +15,9 @@ export default async function HomePage() {
     <div className="relative flex flex-col gap-10 overflow-hidden lg:overflow-visible bg-[#171717]">
       <HomeHero recentProjects={projects.slice(0, 3)} />
       <div className="grid-layout flex flex-col gap-10">
-        <HomeAbout />
-        <HomeStack />
+        <HomeAbout>
+          <HomeStack />
+        </HomeAbout>
         <HomeWorks projects={pinnedProjects} />
       </div>
       <HomeContact />

@@ -6,16 +6,17 @@ import { MSWInitializer } from "@/mocks/msw-initializer";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { GsapProvider } from "@/shared/providers/gsap-provider";
 import TopButton from "@/shared/components/top-button";
+import { ScrollReset } from "@/shared/components/scroll-reset";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://psh-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   title: { default: "Psh' Portfolio", template: "%s | Portfolio" },
-  description: "프론트엔드 개발자 박성환의 포트폴리오 사이트입니다.",
+  description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
   metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Psh' Portfolio",
-    description: "프론트엔드 개발자 박성환의 포트폴리오 사이트입니다.",
+    description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
     url: siteUrl,
     siteName: "Psh' Portfolio",
     locale: "ko_KR",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Psh' Portfolio",
-    description: "프론트엔드 개발자 박성환의 포트폴리오 사이트입니다.",
+    description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
   },
 };
 
@@ -35,11 +36,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark">
-      <body className="bg-[#171717] text-foreground min-h-screen font-pretendard">
+      <body className="bg-[#171717] text-foreground min-h-screen font-pretendard" suppressHydrationWarning>
         <QueryProvider>
           <GsapProvider>
             <TooltipProvider>
               <MSWInitializer />
+              <ScrollReset />
               {children}
               <Toaster richColors theme="dark" />
               <TopButton />

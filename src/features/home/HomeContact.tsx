@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useScrollFadeIn } from "@/shared/hooks/useScrollFadeIn";
 
 export default function HomeContact() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "0px 0px -10% 0px" });
+  const inView = useScrollFadeIn(ref, "0px 0px -10% 0px");
 
   return (
     <div className="flex items-center relative w-full">
@@ -39,7 +40,7 @@ export default function HomeContact() {
           </p>
           <div className="inline-block relative">
             <div className="flex divide-x divide-zinc-50/20 text-zinc-300 mb-10">
-              <div className="text-sm flex flex-col gap-1 pl-5 border-l border-zinc-700">
+              <div className="text-sm flex flex-col gap-1 pl-5 border-l border-zinc-200">
                 <div>010 4105 4301</div>
                 <div>bbakkomm@gmail.com</div>
               </div>

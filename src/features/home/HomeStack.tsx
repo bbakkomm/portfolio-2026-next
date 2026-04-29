@@ -109,17 +109,17 @@ export default function HomeStack() {
                     {stacks.map(({ name, description }, idx) => (
                       <Tooltip key={idx}>
                         <TooltipTrigger asChild>
-                          <div className="flex items-center p-2 bg-zinc-800/30 gap-3 group rounded-lg hover:bg-zinc-50/10 transition-colors">
+                          <div className="flex items-center p-2 bg-zinc-800/30 gap-3 rounded-lg transition-colors">
                             <StackIconMapper
                               stackName={name}
-                              className="size-5 grayscale group-hover:grayscale-0 text-zinc-300 hover:text-zinc-100 transition-all"
+                              className="size-5 text-zinc-300 transition-all"
                             />
-                            <span className="text-xs text-zinc-400 group-hover:text-zinc-50">
+                            <span className="text-xs text-zinc-400">
                               {name}
                             </span>
                           </div>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-pink-400 text-zinc-50 border border-pink-300 shadow-md text-xs">
+                        <TooltipContent className="bg-pink-400 text-zinc-50 border border-pink-300 shadow-md text-xs" arrowClassName="bg-pink-400 fill-pink-400">
                           <span className="font-semibold">{name}</span>
                           <br />
                           {description}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useScrollFadeIn } from "@/shared/hooks/useScrollFadeIn";
 import { cn } from "@/shared/lib/cn";
 
 type GraphItem = {
@@ -50,7 +51,7 @@ const graphData: GraphItem[] = [
 
 export default function HomeStackGraph() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "0px 0px -10% 0px" });
+  const inView = useScrollFadeIn(ref, "0px 0px -10% 0px");
 
   return (
     <div className="flex flex-col gap-6 text-sm w-full">
@@ -70,7 +71,7 @@ export default function HomeStackGraph() {
             <div
               key={idx}
               className={cn(
-                "h-full transition-all duration-700 relative group cursor-pointer",
+                "h-full transition-all duration-700 relative group",
                 "hover:opacity-90"
               )}
               style={{ width: `${e.percent}%` }}
@@ -122,7 +123,7 @@ export default function HomeStackGraph() {
         </div>
 
         {/* 범례 */}
-        <div className="flex items-center gap-4 text-xs">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap items-center gap-x-4 gap-y-2 text-xs">
           {graphData.map((e, idx) => (
             <div key={idx} className="flex items-center gap-2">
               <div className={cn("w-3 h-3 rounded-sm", e.color)} />

@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
-import { SquareMousePointer, Code2, TrendingUp } from "lucide-react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
+import { motion } from "framer-motion";
+import { useScrollFadeIn } from "@/shared/hooks/useScrollFadeIn";
+import { SquareMousePointer, Code2, TrendingUp, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
 import { cn } from "@/shared/lib/cn";
@@ -72,9 +73,9 @@ function CountUp({ target, inView }: { target: number; inView: boolean }) {
 const H = { opacity: 0, y: 30, filter: "blur(8px)" };
 const V = { opacity: 1, y: 0, filter: "blur(0px)" };
 
-export default function HomeAbout() {
+export default function HomeAbout({ children }: { children?: ReactNode }) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(sectionRef, { once: false, margin: "0px 0px -10% 0px" });
+  const inView = useScrollFadeIn(sectionRef, "0px 0px -10% 0px");
 
   return (
     <div ref={sectionRef} className="flex flex-col z-11 relative">
@@ -87,12 +88,12 @@ export default function HomeAbout() {
           className="flex flex-col gap-5 items-start"
         >
           <HomeSectionTitle>
-            안녕하세요! <br /> <span>프론트엔드 개발자</span> Psh&apos; 입니다.
+            안녕하세요! <br /> <span>프론트엔드 개발자</span>&nbsp;Psh&apos; 입니다.
           </HomeSectionTitle>
         </motion.div>
 
         {/* 메인 레이아웃 */}
-        <div className="grid lg:grid-cols-[1fr_3fr] gap-20 md:gap-40">
+        <div className="grid lg:grid-cols-[1fr_3fr] gap-20 md:gap-15">
           <div className="relative">
             <div className="lg:sticky top-40">
               <motion.div
@@ -106,15 +107,16 @@ export default function HomeAbout() {
                 </p>
                 <Link
                   href={ROUTES.RESUME}
-                  className="inline-flex items-center gap-2 border border-zinc-600 text-zinc-300 hover:border-zinc-300 hover:text-zinc-50 rounded-full px-5 py-2 text-sm transition-colors"
+                  className="inline-flex items-center gap-2 border border-zinc-600 text-zinc-300 hover:border-zinc-300 hover:text-zinc-50 rounded-lg px-5 py-4 text-sm transition-colors"
                 >
                   About me
+                  <ChevronRight className="size-4" />
                 </Link>
               </motion.div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-40">
+          <div className="flex flex-col gap-20">
             {/* 숫자 카드 */}
             <motion.div
               initial={H}
@@ -168,6 +170,7 @@ export default function HomeAbout() {
               ))}
             </motion.div>
 
+            {children}
           </div>
         </div>
       </div>

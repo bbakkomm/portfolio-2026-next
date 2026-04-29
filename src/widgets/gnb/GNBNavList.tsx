@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { LogOut, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import useStore from "@/shared/store/useStore";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/shared/ui/tooltip";
 
 interface NavPage {
   path: string;
@@ -121,6 +122,7 @@ const GNBNavList = () => {
               onClick={async () => {
                 await mutateAsync();
                 closeMenu();
+                router.push("/");
               }}
             >
               LogOut
@@ -152,14 +154,68 @@ const GNBNavList = () => {
               </button>
             );
           })}
-          <div className="ml-auto flex">
+          <div className="ml-auto flex gap-2 items-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href="https://open.kakao.com/o/sq4skkTf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
+                  >
+                    <img
+                      src="/svg/kakao.svg"
+                      alt="오픈 카카오톡"
+                      width={14}
+                      height={14}
+                      className="opacity-50 group-hover:opacity-100 transition-all filter-[brightness(0)_invert(1)]"
+                    />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  className="bg-pink-400 text-zinc-50 border border-pink-300"
+                  arrowClassName="bg-pink-400 fill-pink-400"
+                >
+                  오픈 카카오톡
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href="https://github.com/bbakkomm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
+                  >
+                    <img
+                      src="/svg/giticon.svg"
+                      alt="GitHub"
+                      width={14}
+                      height={14}
+                      className="opacity-50 group-hover:opacity-100 transition-all filter-[brightness(0)_invert(1)]"
+                    />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  className="bg-pink-400 text-zinc-50 border border-pink-300"
+                  arrowClassName="bg-pink-400 fill-pink-400"
+                >
+                  GitHub
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             {authentication && (
               <div
                 onClick={async () => {
                   await mutateAsync();
-                  closeMenu();
+                  router.push("/");
                 }}
-                className="bg-transparent! ml-2 transition-all duration-100 group p-2 h-auto rounded-lg border border-zinc-50/10 hover:border-indigo-200/50"
+                className="bg-transparent! transition-all duration-100 group p-2 h-auto rounded-lg border border-zinc-50/10 hover:border-indigo-200/50"
               >
                 <div className="relative">
                   <LogOut className="size-3.5 md:size-3.5 fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />

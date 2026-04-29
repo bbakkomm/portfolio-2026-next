@@ -111,6 +111,10 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
                       <span className="opacity-40">•</span>
                       <span>{duration}일</span>
                     </div>
+                    <div className="flex items-center gap-1 mt-4 text-sm text-zinc-400 group-hover:text-zinc-100 transition-colors">
+                      View Project
+                      <ChevronRight className="size-4" />
+                    </div>
                   </div>
                 </Link>
               </div>
@@ -119,18 +123,9 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="flex justify-center gap-2 mt-4">
-        {projects.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => emblaApi?.scrollTo(idx)}
-            className={cn(
-              "w-2 h-2 rounded-full transition-all",
-              idx === selectedIndex ? "bg-zinc-50 scale-125" : "bg-zinc-600"
-            )}
-          />
-        ))}
+      {/* Counter */}
+      <div className="absolute top-0 right-0 text-base font-montserrat text-zinc-50">
+        {selectedIndex + 1} / {projects.length}
       </div>
     </div>
   );

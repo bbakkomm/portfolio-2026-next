@@ -243,7 +243,7 @@
 @layer base {
   html {
     @apply text-[14px] sm:text-[15px] md:text-[16px];
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::-webkit-scrollbar {
@@ -260,7 +260,8 @@
   body {
     @apply bg-[#171717] text-foreground;
     font-family: "Pretendard Variable", sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
+    word-break: keep-all;
   }
 
   input,
@@ -469,4 +470,81 @@
 
 @utility text-shadow-3x {
   text-shadow: 0 0 30px rgba(45, 212, 191, 0.3);
+}
+
+/* ─── Project Detail Body Typography ─────────────────────────── */
+
+.prose p {
+  font-size: 15px;
+  line-height: 2;
+  letter-spacing: -0.01rem;
+  color: #d6d6d6;
+}
+
+@media (max-width: 768px) {
+  .prose p { font-size: 13px; }
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #f8f8f8;
+  line-height: 1.7;
+}
+.prose h2 { font-size: 1.75rem; line-height: 2; margin-top: 3rem; }
+.prose h3 { font-size: 1.5rem; line-height: 2; }
+.prose h4 { font-size: 1.25rem; line-height: 2; }
+
+.prose blockquote {
+  border-left: 3px solid gray;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-left: 1rem;
+  color: #d6d6d6;
+  font-style: normal;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1.5em 0;
+  padding-left: 1.5em;
+}
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+
+.prose li {
+  font-size: 15px;
+  line-height: 2;
+  color: #d6d6d6;
+}
+
+.prose li p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.prose li::marker {
+  color: #a1a1aa;
+}
+
+.prose code {
+  font-family: "Poppins", monospace;
+  color: #f89c9c;
+  background: none;
+  font-size: 0.875em;
+  font-weight: normal;
+  padding: 0;
+  border-radius: 0;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+@media (max-width: 768px) {
+  .prose li { font-size: 13px; }
 }
