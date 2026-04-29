@@ -49,9 +49,9 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
           )}
           <h3 className="text-xl group-hover:underline flex items-center gap-2 font-semibold tracking-tight text-zinc-50 leading-tight line-clamp-2">
             <span>{project.title}</span>
-            <ChevronRight className="size-4 shrink-0 text-zinc-400" />
+            <ChevronRight className="lg:hidden size-4 shrink-0 text-zinc-400" />
           </h3>
-          <div className="flex items-center gap-4 text-sm text-zinc-500 mt-1">
+          <div className="flex items-center gap-2 text-sm text-zinc-500 mt-1">
             <span className="whitespace-nowrap">{project.project_member}</span>
             <span className="opacity-40">•</span>
             <span className="text-zinc-500">{duration}일</span>
@@ -147,9 +147,9 @@ export default function ProjectListView({
       <div className="relative flex flex-col grid-layout pt-50 md:pt-60 z-5">
         {/* 헤더 */}
         <section className="grid grid-cols-1 pb-8 items-start">
-          <h1 className="text-zinc-50 text-5xl lg:text-6xl leading-14 mb-10 font-bold">Projects</h1>
-          <div className="text-zinc-400 leading-relaxed mb-12 flex flex-col items-start">
-            <p className="text-base max-w-[620px] mt-5 mb-2">
+          <h1 className="text-zinc-50 text-5xl lg:text-6xl leading-14 mb-5 font-bold">Projects</h1>
+          <div className="text-zinc-400 leading-relaxed flex flex-col items-start">
+            <p className="text-base max-w-[620px] mt-0 lg:mt-5 mb-2">
               React·Next 기반의 최신 프로젝트부터 초기 퍼블리싱 작업까지 포함한 전체 작업
               목록입니다. 비공개 또는 협업 정책에 따라 공유가 제한된 작업은 게시하지 않습니다.
             </p>
@@ -159,13 +159,13 @@ export default function ProjectListView({
         {/* Pinned Projects */}
         <ProjectPinnedSection projects={pinnedProjects} />
 
-        <section className="w-full mt-24 pt-8">
+        <section className="w-full mt-20 pt-8">
           <div className="mb-5">
             <div className="mb-6">
               <h2 className="text-zinc-50 text-3xl flex gap-2 items-center font-semibold">
                 Other Projects
               </h2>
-              <p className="text-base leading-relaxed text-zinc-400">
+              <p className="text-base leading-relaxed text-zinc-400 mt-3">
                 Pinned를 제외한 전체 프로젝트 목록입니다.
               </p>
             </div>

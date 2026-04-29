@@ -20,7 +20,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
       <div className="pr-15">
         <aside className="lg:sticky lg:top-40 flex flex-col items-start">
           <div className="leading-relaxed max-w-[360px] mb-6 items-start flex flex-col">
-            <h2 className="pb-1 text-zinc-200 text-2xl font-semibold">Pinned Project</h2>
+            <h2 className="mb-3 text-zinc-200 text-2xl font-semibold">Pinned Project</h2>
             <p className="text-sm leading-relaxed text-zinc-400">
               React·Next.js 기반으로 진행한 주요 프로젝트입니다. 최신 스택을
               사용하며 기술적 완성도를 높이는 데 집중했습니다.
@@ -52,14 +52,14 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
                   />
                 )}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col justify-center gap-2 overflow-hidden">
                 <h3 className="text-2xl font-semibold tracking-tight text-zinc-50">
                   {project.title}
                 </h3>
                 <p className="text-sm text-zinc-400 my-2 leading-relaxed line-clamp-2">
                   {project.description}
                 </p>
-                <div className="hidden lg:flex items-center gap-4 text-[0.85rem] text-zinc-400 mt-3">
+                <div className="hidden lg:flex items-center gap-2 text-[0.85rem] text-zinc-400 mt-3">
                   <span>{project.project_member}</span>
                   <span className="opacity-40">•</span>
                   <span>{duration}일</span>
