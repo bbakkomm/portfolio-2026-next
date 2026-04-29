@@ -59,24 +59,17 @@ const GNBNavList = () => {
 
   const openMenu = () => {
     setView(true);
-    if (!menuWrapperRef.current) return;
-    menuWrapperRef.current.style.transform = "translateX(0%)";
-    menuWrapperRef.current.style.transition = "transform 0.4s ease";
   };
 
   const closeMenu = () => {
-    if (!menuWrapperRef.current) return;
-    menuWrapperRef.current.style.transform = "translateX(100%)";
-    menuWrapperRef.current.style.transition = "transform 0.35s ease";
-    const timer = setTimeout(() => setView(false), 350);
-    return () => clearTimeout(timer);
+    setView(false);
   };
 
   return (
     <>
       {view && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[800] h-screen"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[800] h-screen animate-in fade-in duration-300"
           onClick={closeMenu}
         />
       )}
@@ -84,8 +77,8 @@ const GNBNavList = () => {
       <div
         ref={menuWrapperRef}
         className={cn(
-          "fixed right-0 top-0 w-full h-screen z-[900] bg-zinc-900/95 text-zinc-100 px-10 pt-8 pb-16 flex flex-col shadow-2xl",
-          !view && "translate-x-full"
+          "fixed right-0 top-0 w-full h-screen z-[900] bg-zinc-900/95 text-zinc-100 px-10 pt-8 pb-16 flex flex-col shadow-2xl transition-opacity duration-300",
+          view ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         style={{
           backdropFilter: "blur(12px)",

@@ -33,6 +33,7 @@ import { ROUTES } from "@/shared/config/routes";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
+import { revalidateProjectAction } from "@/features/project/api/project-actions";
 
 const DynamicEditor = dynamic(() => import("./DynamicEditor"), { ssr: false });
 
@@ -205,8 +206,10 @@ export default function ProjectForm({
         queryClient.invalidateQueries({
           queryKey: [`PROJECT_DETAIL:${projectId}`],
         }),
+        revalidateProjectAction(projectId),
       ]);
       router.push(ROUTES.ADMIN);
+      router.refresh();
     },
     onError: (error: Error) => {
       toast.error(`오류가 발생했습니다: ${error.message}`);
