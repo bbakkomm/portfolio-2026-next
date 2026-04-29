@@ -151,14 +151,19 @@ export default function ProjectForm({
         resolvedProjectId = projectId!;
       }
 
-      // project_contents upsert
-      const { error: contentsError } = await supabase
-        .from("project_contents")
-        .upsert({
-          project_id: resolvedProjectId,
-          contents: body.contents,
-        });
-      if (contentsError) throw new Error(contentsError.message);
+      // project_contents: add는 insert, edit는 update
+      if (mode === "add") {
+        const { error: contentsError } = await supabase
+          .from("project_contents")
+          .insert({ project_id: resolvedProjectId, contents: body.contents });
+        if (contentsError) throw new Error(contentsError.message);
+      } else {
+        const { error: contentsError } = await supabase
+          .from("project_contents")
+          .update({ contents: body.contents })
+          .eq("project_id", resolvedProjectId);
+        if (contentsError) throw new Error(contentsError.message);
+      }
 
       // project_surmmry: 삭제 후 재삽입
       await supabase
