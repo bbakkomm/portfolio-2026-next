@@ -17,10 +17,11 @@ function getDurationDays(start: string | null, end: string | null): number {
 }
 
 export default function CarouselOrientation({ projects }: { projects: ProjectMeta[] }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "start" });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -41,8 +42,18 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi || isHovered) return;
+    const id = setInterval(() => emblaApi.scrollNext(), 5000);
+    return () => clearInterval(id);
+  }, [emblaApi, isHovered]);
+
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Counter — mobile: badge, PC: plain text */}
       <div className="absolute top-2 right-2 z-10 lg:top-0 lg:right-0 font-montserrat text-zinc-50 bg-black/60 lg:bg-transparent px-2.5 py-0.5 lg:px-0 lg:py-0 rounded-full lg:rounded-none text-xs lg:text-base">
         {selectedIndex + 1} / {projects.length}
@@ -124,29 +135,6 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
         </div>
       </div>
 
-      {/* Mobile/tablet arrows: overlay centered on image area */}
-      <div className="lg:hidden absolute inset-0 pointer-events-none flex flex-col">
-        <div className="aspect-9/8 flex items-center justify-between px-2">
-          <button
-            onClick={scrollPrev}
-            className={cn(
-              "pointer-events-auto p-1",
-              !canScrollPrev && "opacity-30"
-            )}
-          >
-            <ChevronLeft className="size-8 text-zinc-50/80" strokeWidth={1} />
-          </button>
-          <button
-            onClick={scrollNext}
-            className={cn(
-              "pointer-events-auto p-1",
-              !canScrollNext && "opacity-30"
-            )}
-          >
-            <ChevronRight className="size-8 text-zinc-50/80" strokeWidth={1} />
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
