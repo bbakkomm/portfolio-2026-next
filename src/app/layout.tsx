@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { pretendard, montserrat, poppins, bebas, bruno, brunoSC, nexon } from "@/shared/styles/fonts";
 import { QueryProvider } from "@/shared/providers/query-provider";
@@ -11,10 +11,17 @@ import { ScrollReset } from "@/shared/components/scroll-reset";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://psh-portfolio.vercel.app";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#171717",
+};
+
 export const metadata: Metadata = {
   title: { default: "Psh' Portfolio", template: "%s | Portfolio" },
   description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
   metadataBase: new URL(siteUrl),
+  alternates: { canonical: siteUrl },
   openGraph: {
     title: "Psh' Portfolio",
     description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
@@ -22,12 +29,24 @@ export const metadata: Metadata = {
     siteName: "Psh' Portfolio",
     locale: "ko_KR",
     type: "website",
+    images: [{ url: "/img/meta.jpg", width: 1200, height: 630, alt: "Psh' Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Psh' Portfolio",
     description: "프론트엔드 개발자 PSH의 포트폴리오 사이트입니다.",
+    images: ["/img/meta.jpg"],
   },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "박성훈",
+  jobTitle: "Frontend Developer",
+  url: siteUrl,
+  email: "bbakkomm@gmail.com",
+  sameAs: ["https://github.com/bbakkomm"],
 };
 
 export default function RootLayout({
@@ -41,6 +60,12 @@ export default function RootLayout({
       className={`dark ${[pretendard, montserrat, poppins, bebas, bruno, brunoSC, nexon].map((f) => f.variable).join(" ")}`}
     >
       <body className="bg-[#171717] text-foreground min-h-screen font-pretendard" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <QueryProvider>
           <GsapProvider>
             <TooltipProvider>

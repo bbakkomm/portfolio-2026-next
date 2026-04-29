@@ -42,5 +42,31 @@ export default async function WorkDetailPage({ params }: Props) {
 
   if (!project) notFound();
 
-  return <ProjectDetailView project={project} />;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://psh-portfolio.vercel.app";
+  const imageUrl = project.thumbnail
+    ? `${process.env.NEXT_PUBLIC_IMAGE_URL ?? ""}${project.thumbnail}`
+    : undefined;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.description,
+    url: `${siteUrl}/work/${id}`,
+    ...(imageUrl && { image: imageUrl }),
+    ...(project.start_date && { dateCreated: project.start_date }),
+    ...(project.end_date && { dateModified: project.end_date }),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <ProjectDetailView project={project} />
+    </>
+  );
 }
