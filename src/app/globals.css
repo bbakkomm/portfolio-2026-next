@@ -198,6 +198,12 @@
     cursor: pointer;
   }
 
+  :focus-visible {
+    outline: 2px solid oklch(0.718 0.202 349.76);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
   .popup-layout {
     max-width: 400px;
     position: fixed;

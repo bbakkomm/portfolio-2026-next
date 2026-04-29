@@ -23,6 +23,7 @@ export default function DynamicProjectContent({ contents }: { contents: string }
 
   return (
     <>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
       <section
         onClick={handleClick}
         className="prose dark:prose-invert prose-sm max-w-none break-keep"

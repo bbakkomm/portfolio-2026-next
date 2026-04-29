@@ -86,7 +86,7 @@ export function DatePickerWithRange({
                       end: range?.to ?? null,
                     });
                   }}
-                  autoFocus
+
                 />
               </FormItem>
             </PopoverContent>

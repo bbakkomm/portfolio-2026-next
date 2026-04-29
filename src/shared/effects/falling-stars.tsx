@@ -96,6 +96,7 @@ export default function FallingStarsEffect() {
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className="absolute inset-0 w-full h-full overflow-hidden z-[15] pointer-events-none"
     >
       {bgStars.map((star) => (

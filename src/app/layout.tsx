@@ -60,6 +60,12 @@ export default function RootLayout({
       className={`dark ${[pretendard, montserrat, poppins, bebas, bruno, brunoSC, nexon].map((f) => f.variable).join(" ")}`}
     >
       <body className="bg-[#171717] text-foreground min-h-screen font-pretendard" suppressHydrationWarning>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:top-4 focus:left-4 focus:rounded-md focus:bg-zinc-900 focus:px-4 focus:py-2 focus:text-white focus:outline"
+        >
+          본문 바로가기
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

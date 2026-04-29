@@ -85,7 +85,14 @@ const GNBNavList = () => {
         }}
       >
         <div className="flex justify-end">
-          <X className="size-8 cursor-pointer" onClick={closeMenu} />
+          <button
+            type="button"
+            aria-label="메뉴 닫기"
+            onClick={closeMenu}
+            className="cursor-pointer"
+          >
+            <X className="size-8" aria-hidden="true" />
+          </button>
         </div>
 
         <div className="flex flex-col gap-10 items-center justify-center flex-1">
@@ -127,6 +134,7 @@ const GNBNavList = () => {
       </div>
 
       <nav
+        aria-label="주요 메뉴"
         className="grid grid-cols-[auto_1fr] gap-20 py-1 w-full"
         ref={headerRef}
       >
@@ -221,7 +229,10 @@ const GNBNavList = () => {
           </div>
         </div>
 
-        <div
+        <button
+          type="button"
+          aria-label="메뉴 열기"
+          aria-expanded={view}
           className="group cursor-pointer relative items-center justify-center md:hidden flex ml-auto"
           onClick={openMenu}
         >
@@ -234,7 +245,7 @@ const GNBNavList = () => {
               <span className="w-6 h-0.5 bg-slate-300 rounded-full group-hover:bg-slate-100 transition-colors duration-300" />
             </div>
           </div>
-        </div>
+        </button>
       </nav>
     </>
   );
