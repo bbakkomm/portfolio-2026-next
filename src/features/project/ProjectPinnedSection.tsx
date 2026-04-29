@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import imgUrlMapper from "@/shared/lib/img-url";
 import type { ProjectMeta } from "@/entities/project/model";
@@ -62,6 +63,10 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
                   <span>{project.project_member}</span>
                   <span className="opacity-40">•</span>
                   <span>{duration}일</span>
+                </div>
+                <div className="flex items-center gap-1 mt-4 text-sm text-zinc-400 group-hover:text-zinc-100 transition-colors">
+                  View Project
+                  <ChevronRight className="size-4" />
                 </div>
               </div>
             </Link>

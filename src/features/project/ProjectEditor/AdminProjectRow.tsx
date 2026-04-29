@@ -1,56 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { Pin, Loader2 } from "lucide-react";
 import { Button } from "@/shared/ui/button";
-import { createClient } from "@/shared/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import { cn } from "@/shared/lib/cn";
+import { togglePinAction, deleteProjectAction } from "@/features/project/api/project-actions";
 import type { ProjectMeta } from "@/entities/project/model";
 
 export default function AdminProjectRow({ project }: { project: ProjectMeta }) {
-  const router = useRouter();
-  const isPinned = !!(project as any).project_pin?.length;
+  const projectPin = (project as any).project_pin;
+  const isPinned = Array.isArray(projectPin) ? projectPin.length > 0 : !!projectPin;
   const [pinned, setPinned] = useState(isPinned);
-  const [loading, setLoading] = useState(false);
+  const [isPinPending, startPinTransition] = useTransition();
+  const [isDeletePending, startDeleteTransition] = useTransition();
 
-  const togglePin = async () => {
-    if (loading) return;
-    setLoading(true);
-    const supabase = createClient();
-    if (!pinned) {
-      await supabase.from("project_pin").insert({ fk_project_id: project.id });
-    } else {
-      await supabase.from("project_pin").delete().eq("fk_project_id", project.id);
-    }
-    setPinned((v) => !v);
-    setLoading(false);
-    router.refresh();
+  const handleTogglePin = () => {
+    startPinTransition(async () => {
+      await togglePinAction(project.id, pinned);
+      setPinned((v) => !v);
+    });
+  };
+
+  const handleDelete = () => {
+    if (!confirm("삭제하시겠습니까?")) return;
+    startDeleteTransition(async () => {
+      await deleteProjectAction(project.id);
+    });
   };
 
   return (
-    <div className="flex items-center justify-between border border-border rounded-lg p-4">
-      <div className="flex flex-col gap-1">
-        <span className="font-semibold">{project.title}</span>
-        <span className="text-sm text-foreground/50">{project.company}</span>
-      </div>
-      <div className="flex gap-2 items-center">
-        <button
-          type="button"
-          onClick={togglePin}
-          disabled={loading}
-          className="p-1.5 rounded-md text-zinc-400 hover:text-yellow-400 transition-colors disabled:opacity-50"
-          aria-label={pinned ? "핀 해제" : "핀 추가"}
+    <li className="py-3 px-3 flex items-center justify-between">
+      <span
+        className="cursor-pointer hover:underline"
+      >
+        {project.title}
+      </span>
+
+      <div className="flex gap-2">
+        <Button
+          onClick={handleTogglePin}
+          className={cn("text-xs", pinned && "border-indigo-300! text-indigo-200")}
+          variant="outline"
+          size="sm"
+          disabled={isPinPending}
         >
-          <Star
-            size={16}
-            className={pinned ? "fill-yellow-400 text-yellow-400" : ""}
-          />
-        </button>
-        <Button variant="outline" size="sm" asChild>
-          <Link href={`/admin/project/${project.id}/edit`}>편집</Link>
+          {isPinPending ? (
+            <Loader2 className="size-3 animate-spin" />
+          ) : pinned ? (
+            <>
+              <Pin className="size-3" /> 고정 중
+            </>
+          ) : (
+            "고정"
+          )}
+        </Button>
+        <Button asChild variant="ghost" size="sm">
+          <Link href={`/admin/project/${project.id}/edit`}>수정</Link>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleDelete}
+          disabled={isDeletePending}
+          className="text-xs"
+        >
+          {isDeletePending ? <Loader2 className="size-3 animate-spin" /> : "삭제"}
         </Button>
       </div>
-    </div>
+    </li>
   );
 }

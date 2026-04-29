@@ -157,7 +157,7 @@ export default function ProjectListView({
         {/* Pinned Projects */}
         <ProjectPinnedSection projects={pinnedProjects} />
 
-        <section className="w-full mt-10 pt-8">
+        <section className="w-full mt-24 pt-8">
           <div className="mb-5">
             <div className="mb-6">
               <h2 className="text-zinc-50 text-3xl flex gap-2 items-center font-semibold">
