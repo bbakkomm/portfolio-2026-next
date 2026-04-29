@@ -19,7 +19,13 @@ export default function NotFound() {
       <Button
         variant="outline"
         className="rounded-full p-6"
-        onClick={() => router.back()}
+        onClick={() => {
+          if (window.history.length > 1) {
+            router.back();
+          } else {
+            router.push("/");
+          }
+        }}
       >
         이전화면
       </Button>
