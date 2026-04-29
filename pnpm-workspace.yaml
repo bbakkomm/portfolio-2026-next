@@ -1,3 +1,5 @@
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+patchedDependencies:
+  '@squirrel309/my-testcounter@0.0.67': patches/@squirrel309__my-testcounter@0.0.67.patch

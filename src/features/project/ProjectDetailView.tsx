@@ -2,19 +2,35 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Link2, ChevronLeft } from "lucide-react";
+import { Link2, ChevronLeft, Loader2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { normalizeContentHtml } from "@/shared/lib/normalize-content-html";
 import imgUrlMapper from "@/shared/lib/img-url";
 import type { ProjectDetailFull, STACK_TYPES } from "@/entities/project/model";
 import { ROUTES } from "@/shared/config/routes";
+import useStore from "@/shared/store/useStore";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { deleteProjectAction } from "@/features/project/api/project-actions";
+import { Button } from "@/shared/ui/button";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@/shared/ui/alert-dialog";
 
 // ── Utils ──────────────────────────────────────────────────────
 
 function getDurationDays(start: string | null, end: string | null): number {
   if (!start || !end) return 0;
   const diff = new Date(end).getTime() - new Date(start).getTime();
-  return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+  return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)) + 1);
 }
 
 function groupStacksByType(
@@ -147,6 +163,17 @@ function ProjectContent({ contents }: { contents: string | undefined }) {
 // ── Main Component ─────────────────────────────────────────────
 
 export default function ProjectDetailView({ project }: { project: ProjectDetailFull }) {
+  const authentication = useStore((s: { authentication: boolean }) => s.authentication);
+  const router = useRouter();
+  const [isDeletePending, startDeleteTransition] = useTransition();
+
+  const handleDelete = () => {
+    startDeleteTransition(async () => {
+      await deleteProjectAction(project.id);
+      router.push(ROUTES.WORK);
+    });
+  };
+
   return (
     <section className="pt-30 grid-layout flex-col md:mt-auto pb-10 grid lg:grid-cols-[220px_1fr] lg:gap-15">
       <div>
@@ -168,6 +195,32 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
             member={project.project_member}
             url={project.projectUrl ?? (project as any).project_url ?? ""}
           />
+          {authentication && (
+            <div className="flex gap-2 mt-6">
+              <Button asChild variant="outline" size="sm">
+                <Link href={`/admin/project/${project.id}/edit`}>수정</Link>
+              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" disabled={isDeletePending}>
+                    {isDeletePending ? <Loader2 className="size-3 animate-spin" /> : "삭제"}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>프로젝트를 삭제하시겠습니까?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      삭제된 프로젝트는 복구할 수 없습니다.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>취소</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete}>삭제</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          )}
         </div>
       </div>
 

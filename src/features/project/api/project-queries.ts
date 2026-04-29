@@ -105,7 +105,7 @@ export async function getProjectEdit(
       project_surmmry (*),
       project_pin (id),
       project_meta_stack (
-        project_stack (type, stack)
+        project_stack (id, type, stack)
       )
     `
     )

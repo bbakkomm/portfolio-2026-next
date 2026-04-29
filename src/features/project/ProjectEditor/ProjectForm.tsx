@@ -102,7 +102,7 @@ export default function ProjectForm({
             : null,
         },
         contents:
-          (initialData as any).project_contents?.content ?? "",
+          (initialData as any).project_contents?.[0]?.contents ?? "",
       });
 
       if ((initialData as any).img_key) {
@@ -119,9 +119,8 @@ export default function ProjectForm({
         title: body.title,
         company: body.company,
         description: body.description,
-        projectDescription: "",
         project_member: body.members,
-        projectUrl: body.url ?? "",
+        project_url: body.url ?? "",
         start_date: body.workRange.start
           ? format(body.workRange.start, "yyyy. MM. dd")
           : null,
@@ -130,8 +129,6 @@ export default function ProjectForm({
           : null,
         thumbnail: body.thumbnail,
         img_key: imgKey,
-        hashtag: [],
-        skill: [],
       };
 
       let resolvedProjectId: number;
@@ -158,7 +155,7 @@ export default function ProjectForm({
         .from("project_contents")
         .upsert({
           project_id: resolvedProjectId,
-          content: body.contents,
+          contents: body.contents,
         });
       if (contentsError) throw new Error(contentsError.message);
 

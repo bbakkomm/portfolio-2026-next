@@ -22,6 +22,7 @@ export interface ProjectDetailProps {
   project_member: string;
   project_meta_stack: Array<{
     project_stack: {
+      id: number;
       type: STACK_TYPES;
       stack: string;
     };
@@ -75,6 +76,7 @@ export interface ProjectDetailFull extends ProjectMeta {
   project_pin: { id: number } | null;
   project_meta_stack: Array<{
     project_stack: {
+      id?: number;
       type: STACK_TYPES;
       stack: string;
     };

@@ -13,7 +13,7 @@ import { ROUTES } from "@/shared/config/routes";
 function getDurationDays(start: string | null, end: string | null): number {
   if (!start || !end) return 0;
   const diff = new Date(end).getTime() - new Date(start).getTime();
-  return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+  return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)) + 1);
 }
 
 export default function CarouselOrientation({ projects }: { projects: ProjectMeta[] }) {

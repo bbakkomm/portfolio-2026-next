@@ -1,0 +1,13 @@
+diff --git a/dist/index.js b/dist/index.js
+index 9af5958aa960246ded4d471e0b160b958200cd2a..b481cf77f2b184d2dfed774d329f8ab57c69135c 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -6014,7 +6014,7 @@ var ImageUploadNode = (props) => {
+       const filename = files[0]?.name.replace(/\.[^/.]+$/, "") || "unknown";
+       props.editor.chain().focus().deleteRange({ from: pos, to: pos + 1 }).insertContentAt(pos, [
+         {
+-          type: "image",
++          type: "imageResize",
+           attrs: { src: url, alt: filename, title: filename }
+         }
+       ]).run();
