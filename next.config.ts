@@ -6,6 +6,7 @@ const withBundleAnalyzer = BundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   turbopack: {
     root: __dirname,
   },

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  portfolio-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-2026-next
+    restart: always
+    ports:
+      - "8999:3000" # 호스트 포트:컨테이너 포트 (필요시 좌측 호스트 포트 변경 가능)
+    environment:
+      - NODE_ENV=production
+      # 환경변수가 필요하다면 여기에 추가하거나 env_file 설정을 사용하세요
+      # - NEXT_PUBLIC_SUPABASE_URL=your_url
+      # - NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+    # 런타임에 사용할 환경변수 파일 지정
+    env_file:
+      - .env.local
