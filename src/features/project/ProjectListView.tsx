@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
+import { Search, X, SlidersHorizontal, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/shared/lib/cn";
 import imgUrlMapper from "@/shared/lib/img-url";
@@ -35,7 +35,7 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
         href={`${ROUTES.WORK}/${project.id}`}
         className="group relative flex flex-col gap-3 transition-all duration-500 hover:opacity-95"
       >
-        <div className="flex flex-col justify-center gap-2 mb-10">
+        <div className="flex flex-col justify-center gap-2 mb-4 lg:mb-10">
           {project.thumbnail && (
             <div className="lg:block hidden relative aspect-5/3 w-full overflow-hidden rounded-sm mb-3">
               <Image
@@ -47,8 +47,9 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
               />
             </div>
           )}
-          <h3 className="text-xl group-hover:underline flex items-center gap-5 font-semibold tracking-tight text-zinc-50 leading-tight line-clamp-2">
+          <h3 className="text-xl group-hover:underline flex items-center gap-2 font-semibold tracking-tight text-zinc-50 leading-tight line-clamp-2">
             <span>{project.title}</span>
+            <ChevronRight className="size-4 shrink-0 text-zinc-400" />
           </h3>
           <div className="flex items-center gap-4 text-sm text-zinc-500 mt-1">
             <span className="whitespace-nowrap">{project.project_member}</span>
@@ -75,6 +76,7 @@ export default function ProjectListView({
   const [selectedStack, setSelectedStack] = useState<string | null>(null);
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
 
   const pinnedIds = useMemo(
     () => new Set(pinnedProjects.map((p) => p.id)),
@@ -168,38 +170,60 @@ export default function ProjectListView({
               </p>
             </div>
 
-            {/* 검색창 */}
-            <div className="relative max-w-sm">
-              <label htmlFor="project-search" className="sr-only">
-                프로젝트 검색
-              </label>
-              <Search
-                aria-hidden="true"
-                className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-500 pointer-events-none"
-              />
-              <input
-                id="project-search"
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="프로젝트, 스택, 태그 검색..."
-                className="w-full pl-9 pr-8 py-2 text-sm bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus-visible:border-pink-400 focus-visible:ring-2 focus-visible:ring-pink-400/40 transition-colors [&::-webkit-search-cancel-button]:hidden"
-              />
-              {searchQuery && (
+            {/* 검색창 + 모바일 필터 토글 버튼 */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1 lg:flex-none lg:max-w-sm">
+                <label htmlFor="project-search" className="sr-only">
+                  프로젝트 검색
+                </label>
+                <Search
+                  aria-hidden="true"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-500 pointer-events-none"
+                />
+                <input
+                  id="project-search"
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="프로젝트, 스택, 태그 검색..."
+                  className="w-full pl-9 pr-8 py-2 text-sm bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus-visible:border-pink-400 focus-visible:ring-2 focus-visible:ring-pink-400/40 transition-colors [&::-webkit-search-cancel-button]:hidden"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    aria-label="검색어 지우기"
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  >
+                    <X aria-hidden="true" className="size-3.5" />
+                  </button>
+                )}
+              </div>
+
+              {/* 모바일 전용 필터 토글 버튼 */}
+              {availableStacks.length > 0 && (
                 <button
                   type="button"
-                  aria-label="검색어 지우기"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  aria-label="스택 필터"
+                  onClick={() => setShowFilters((v) => !v)}
+                  className={cn(
+                    "lg:hidden relative flex items-center justify-center p-2 rounded-lg border transition-colors shrink-0",
+                    showFilters || selectedStack
+                      ? "border-pink-400 text-pink-400 bg-pink-400/10"
+                      : "border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
+                  )}
                 >
-                  <X aria-hidden="true" className="size-3.5" />
+                  <SlidersHorizontal className="size-4" />
+                  {selectedStack && (
+                    <span className="absolute -top-1 -right-1 size-2 rounded-full bg-pink-400" />
+                  )}
                 </button>
               )}
             </div>
 
-            {/* 스택 필터 */}
+            {/* 스택 필터 — PC: 항상 표시, 모바일: 토글 */}
             {availableStacks.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className={cn("flex-wrap gap-2 mt-3", showFilters ? "flex" : "hidden lg:flex")}>
                 {availableStacks.map((stack) => {
                   const isActive = selectedStack?.toLowerCase() === stack.toLowerCase();
                   return (
@@ -232,8 +256,8 @@ export default function ProjectListView({
                   {isLoadingMore && (
                     <>
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <li key={`sk:${i}`}>
-                          <Skeleton className="aspect-5/3 w-full rounded-sm mb-3" />
+                        <li key={`sk:${i}`} className={cn(i > 0 && "hidden lg:block")}>
+                          <Skeleton className="hidden lg:block aspect-5/3 w-full rounded-sm mb-3" />
                           <Skeleton className="h-5 w-3/4 mb-2" />
                           <Skeleton className="h-4 w-1/2" />
                         </li>
