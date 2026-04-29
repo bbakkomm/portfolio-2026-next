@@ -20,7 +20,7 @@ import { z } from "zod";
 import { DatePickerWithRange } from "./ProjectDatePicker";
 import ProjectSummary from "./ProjectSummary";
 import { cn } from "@/shared/lib/cn";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -50,8 +50,6 @@ export default function ProjectForm({
 }: ProjectFormProps) {
   const router = useRouter();
   const [imgKey, setImgKey] = useState<string>(() => uuidv4());
-  const queryClient = useQueryClient();
-
   const form = useForm<z.infer<typeof projectSchema>>({
     defaultValues: {
       title: "",
@@ -201,15 +199,8 @@ export default function ProjectForm({
           : "프로젝트가 수정 되었습니다."
       );
       form.reset();
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["project-list"] }),
-        queryClient.invalidateQueries({
-          queryKey: [`PROJECT_DETAIL:${projectId}`],
-        }),
-        revalidateProjectAction(projectId),
-      ]);
+      await revalidateProjectAction(projectId);
       router.push(ROUTES.ADMIN);
-      router.refresh();
     },
     onError: (error: Error) => {
       toast.error(`오류가 발생했습니다: ${error.message}`);

@@ -49,12 +49,6 @@ export async function deleteProjectAction(projectId: number): Promise<void> {
   revalidatePath("/admin");
 }
 
-export async function revalidateProjectAction(projectId?: number): Promise<void> {
-  revalidatePath("/");
-  revalidatePath("/work");
-  revalidatePath("/admin");
-  if (projectId != null) {
-    revalidatePath(`/work/${projectId}`);
-    revalidatePath(`/admin/project/${projectId}/edit`);
-  }
+export async function revalidateProjectAction(_projectId?: number): Promise<void> {
+  revalidatePath("/", "layout");
 }
