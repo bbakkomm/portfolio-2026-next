@@ -1,5 +1,3 @@
-import { ArrowRight } from "lucide-react";
-
 interface ProjItem {
   name: string;
   desc?: string;
@@ -21,11 +19,6 @@ const ProjList = ({ items, className }: ProjListProps) => (
       >
         <div className="flex items-center gap-2">
           <span className="font-semibold text-[15px] text-zinc-50">{item.name}</span>
-          {item.showArrow && (
-            <span className="inline-flex items-center justify-center size-5 rounded-full border border-zinc-700 text-zinc-500">
-              <ArrowRight className="size-3" />
-            </span>
-          )}
         </div>
         {item.desc && (
           <div className="text-[13.5px] text-zinc-400 mt-1 leading-[1.7]">{item.desc}</div>

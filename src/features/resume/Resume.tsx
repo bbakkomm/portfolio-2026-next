@@ -13,13 +13,13 @@ const Resume = () => {
     <div className="relative bg-[#171717] overflow-hidden">
       <PageBackdrop imageSrc="/img/heros/rt_01.jpg" />
 
-      <div className="flex-1 grid-layout pt-28 md:pt-36 pb-24 text-base leading-relaxed break-keep">
+      <div className="flex-1 grid-layout pt-28 md:pt-36 text-base leading-relaxed break-keep">
         <div className="relative z-10 max-w-[1100px]">
-          <section className="flex flex-col items-start mb-30">
+          <section className="flex flex-col items-start mb-20">
             <ResumeHero />
           </section>
 
-          <section className="space-y-30">
+          <section className="space-y-20">
             <section>
               <ResumeEducation />
             </section>
@@ -36,7 +36,7 @@ const Resume = () => {
             <div className="flex justify-end">
               <Link
                 href={ROUTES.WORK}
-                className="text-sm px-5 py-3 flex gap-2 items-center underline text-zinc-400 hover:text-zinc-50 transition-colors"
+                className="text-sl px-5 py-3 flex gap-2 items-center underline underline-offset-4 text-zinc-400 hover:text-zinc-50 transition-colors"
               >
                 프로젝트 리스트 보기 <ChevronRight size={12} />
               </Link>
