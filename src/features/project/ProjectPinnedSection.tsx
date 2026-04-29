@@ -38,7 +38,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
               key={project.id}
               href={`${ROUTES.WORK}/${project.id}`}
               className={cn(
-                "group grid grid-cols-[1fr_2fr] lg:grid-cols-[2fr_2fr] gap-10 w-full rounded-xl transition-all duration-500"
+                "group grid grid-cols-[1fr_2fr] lg:grid-cols-[2fr_2fr] gap-4 lg:gap-10 w-full rounded-xl transition-all duration-500"
               )}
             >
               <div className="lg:aspect-8/5 rounded-lg relative overflow-hidden transition-all">
@@ -52,7 +52,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
                   />
                 )}
               </div>
-              <div className="flex flex-col gap-2 md:py-5">
+              <div className="flex flex-col gap-2">
                 <h3 className="text-2xl font-semibold tracking-tight text-zinc-50">
                   {project.title}
                 </h3>
@@ -64,7 +64,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
                   <span className="opacity-40">•</span>
                   <span>{duration}일</span>
                 </div>
-                <div className="flex items-center gap-1 mt-4 text-sm text-zinc-400 group-hover:text-zinc-100 transition-colors">
+                <div className="flex items-center gap-1 mt-2 lg:mt-4 text-sm text-zinc-400 group-hover:text-zinc-100 transition-colors">
                   View Project
                   <ChevronRight className="size-4" />
                 </div>
