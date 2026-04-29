@@ -42,29 +42,33 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <div className="relative lg:flex items-start gap-20">
-      {/* Prev Button */}
+    <div className="relative">
+      {/* Counter — mobile: badge, PC: plain text */}
+      <div className="absolute top-2 right-2 z-10 lg:top-0 lg:right-0 font-montserrat text-zinc-50 bg-black/60 lg:bg-transparent px-2.5 py-0.5 lg:px-0 lg:py-0 rounded-full lg:rounded-none text-xs lg:text-base">
+        {selectedIndex + 1} / {projects.length}
+      </div>
+
+      {/* PC-only: prev/next absolute buttons outside the viewport */}
       <button
         onClick={scrollPrev}
         className={cn(
-          "z-20 p-2 rounded-full absolute top-1/2 -translate-y-1/2 -left-5 hover:border-zinc-300/30",
-          !canScrollPrev && "opacity-60 pointer-events-none"
+          "hidden lg:block z-20 p-2 rounded-full absolute top-1/2 -translate-y-1/2 -left-14",
+          !canScrollPrev && "opacity-30 pointer-events-none"
         )}
       >
         <ChevronLeft className="size-10 text-zinc-50/80" strokeWidth={1} />
       </button>
-
-      {/* Next Button */}
       <button
         onClick={scrollNext}
         className={cn(
-          "z-10 p-2 rounded-full absolute -right-20 top-1/2 -translate-y-1/2 hover:border-zinc-300/90",
-          !canScrollNext && "opacity-60 pointer-events-none"
+          "hidden lg:block z-20 p-2 rounded-full absolute top-1/2 -translate-y-1/2 -right-14",
+          !canScrollNext && "opacity-30 pointer-events-none"
         )}
       >
         <ChevronRight className="size-10 text-zinc-50/80" strokeWidth={1} />
       </button>
 
+      {/* Embla viewport */}
       <div className="w-full overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {projects.map((project, idx) => {
@@ -72,14 +76,11 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
             const duration = getDurationDays(project.start_date, project.end_date);
 
             return (
-              <div
-                key={project.id}
-                className="flex-none w-full"
-              >
+              <div key={project.id} className="flex-none w-full">
                 <Link
                   href={`${ROUTES.WORK}/${project.id}`}
                   className={cn(
-                    "group cursor-pointer grid md:grid-cols-[2fr_2fr] gap-10 w-full rounded-xl transition-all duration-500",
+                    "group cursor-pointer grid md:grid-cols-[2fr_2fr] md:items-center gap-10 w-full rounded-xl transition-all duration-500",
                     isActive ? "opacity-100 grayscale-0" : "opacity-50 grayscale"
                   )}
                 >
@@ -96,14 +97,14 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
                   </div>
                   <div
                     className={cn(
-                      "flex flex-col gap-2 md:py-15 transition-all",
+                      "flex flex-col gap-2 transition-all",
                       isActive ? "opacity-100" : "opacity-0"
                     )}
                   >
                     <h3 className="text-3xl font-semibold tracking-tight text-zinc-50">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-zinc-400 my-2 leading-relaxed line-clamp-2 max-w-[400px] break-keep">
+                    <p className="text-sm text-zinc-400 my-2 leading-relaxed line-clamp-2 max-w-100 break-keep">
                       {project.description}
                     </p>
                     <div className="flex items-center gap-4 text-[0.85rem] text-zinc-400 mt-3">
@@ -123,9 +124,28 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
         </div>
       </div>
 
-      {/* Counter */}
-      <div className="absolute top-0 right-0 text-base font-montserrat text-zinc-50">
-        {selectedIndex + 1} / {projects.length}
+      {/* Mobile/tablet arrows: overlay centered on image area */}
+      <div className="lg:hidden absolute inset-0 pointer-events-none flex flex-col">
+        <div className="aspect-9/8 flex items-center justify-between px-2">
+          <button
+            onClick={scrollPrev}
+            className={cn(
+              "pointer-events-auto p-1",
+              !canScrollPrev && "opacity-30"
+            )}
+          >
+            <ChevronLeft className="size-8 text-zinc-50/80" strokeWidth={1} />
+          </button>
+          <button
+            onClick={scrollNext}
+            className={cn(
+              "pointer-events-auto p-1",
+              !canScrollNext && "opacity-30"
+            )}
+          >
+            <ChevronRight className="size-8 text-zinc-50/80" strokeWidth={1} />
+          </button>
+        </div>
       </div>
     </div>
   );
