@@ -1,7 +1,130 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Web Fonts ───────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("/fonts/PretendardVariable.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SUIT-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BebasNeue-Regular";
+  src: url("/fonts/BebasNeue-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BebasNeue";
+  src: url("/fonts/BebasNeue-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BrunoAce";
+  src: url("/fonts/BrunoAce-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BrunoAceSC";
+  src: url("/fonts/BrunoAceSC-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NEXONLv1Gothic";
+  src: url("/fonts/NEXONLv1GothicLight.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NEXONLv1Gothic";
+  src: url("/fonts/NEXONLv1GothicRegular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NEXONLv1Gothic";
+  src: url("/fonts/NEXONLv1GothicBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Font Tokens ─────────────────────────────────────────────── */
+
+@theme {
+  --font-suit: "SUIT-Regular", "Pretendard Variable", "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+  --font-pretendard: "Pretendard Variable", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-bebas: "BebasNeue", sans-serif;
+  --font-bruno: "BrunoAce", sans-serif;
+  --font-brunoSC: "BrunoAceSC", sans-serif;
+  --font-nexon: "NEXONLv1Gothic", "Pretendard Variable", sans-serif;
+}
+
+/* ─── Design Tokens ───────────────────────────────────────────── */
 
 :root {
   --radius: 0.65rem;
@@ -28,6 +151,7 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -75,56 +199,274 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-count: var(--count);
+  --color-hover: var(--hover);
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+/* ─── Base ────────────────────────────────────────────────────── */
 
+@layer base {
   html {
     @apply text-[14px] sm:text-[15px] md:text-[16px];
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-pink-400);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
   }
 
   body {
     @apply bg-[#171717] text-foreground;
+    font-family: "Pretendard Variable", sans-serif;
+    overflow-x: hidden;
   }
 
   input,
   textarea {
     @apply text-sm;
   }
+
+  .subtext-gradient {
+    @apply font-poppins font-semibold bg-clip-text text-transparent
+
+                        dark:from-white dark:via-white dark:to-blue-300
+                        from-white via-black to-blue-500;
+  }
+
+  .point-v1 {
+    @apply text-transparent bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text;
+  }
+
+  .article-hover {
+    @apply border cursor-pointer border-indigo-300/20 hover:border-indigo-200 hover:shadow-[0_5px_30px_rgba(99,102,241,0.25)] transition-all duration-300;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .popup-layout {
+    max-width: 400px;
+    position: fixed;
+    z-index: 110;
+    width: 95%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    .close {
+      text-align: center;
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 0.8rem;
+
+      span {
+        &::after {
+          position: absolute;
+          left: 0;
+          display: block;
+          content: "";
+          width: 100%;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/* ─── Animate (chip positions + gradient text) ────────────────── */
+
+.my {
+  position: absolute;
+}
+
+.my:nth-child(1) { left: -40px; top: -20px; }
+.my:nth-child(2) { top: 20px; right: -40px; }
+.my:nth-child(3) { right: -60px; bottom: 0; }
+.my:nth-child(4) { right: -30px; bottom: -60px; }
+.my:nth-child(5) { right: -30px; top: -60px; }
+.my:nth-child(6) { left: 60%; top: -70px; }
+.my:nth-child(7) { left: 20%; top: -60px; }
+.my:nth-child(8) { left: -70px; bottom: -20px; }
+.my:nth-child(9) { left: -30px; bottom: -50px; }
+
+@keyframes textShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.text-gradient-ani {
+  background: linear-gradient(
+    to right,
+    #46edd5 20%,
+    #00affa 30%,
+    #56d27f 70%,
+    #46edd5 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 500% auto;
+  animation: textShine 4s linear infinite;
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────── */
+
+@layer ketframes {
+  @keyframes ani {
+    0% { background-size: 100%; }
+    100% { background-size: 120%; }
+  }
+
+  @keyframes leftIn {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0px); }
+  }
+
+  @keyframes topIn {
+    from { opacity: 0; transform: translatey(-50px); }
+    to { opacity: 1; transform: translateY(0px); }
+  }
+
+  @keyframes bottomIn {
+    from { opacity: 0; transform: translatey(50px); }
+    to { opacity: 1; transform: translateY(0px); }
+  }
+
+  @keyframes left-fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .animate-gradient {
+    background-size: 300%;
+    -webkit-animation: animatedgradient 6s ease infinite alternate;
+    -moz-animation: animatedgradient 6s ease infinite alternate;
+    animation: animatedgradient 6s ease infinite alternate;
+  }
+
+  @keyframes opacity {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes fade-in-0 {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-out-0 {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  @keyframes bgScaleInit {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+  }
+
+  @keyframes bgScaleLoop {
+    0% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes spinBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+/* ─── Animate Tokens ──────────────────────────────────────────── */
+
+@theme {
+  --animate-opacity: opacity 1.4s ease;
+  --animate-opacity-infinity: opacity 1.2s ease infinite;
+}
+
+/* ─── Utilities ───────────────────────────────────────────────── */
+
+@utility w-calc-* {
+  width: calc(100% - --spacing(--value(integer)));
+  width: calc(100% - --value([length]));
+}
+
+@utility grid-layout {
+  @apply max-w-[1100px] mx-auto w-calc-[5rem] md:w-calc-[7rem] lg:w-calc-[10.5rem];
+}
+
+@utility section-layout {
+  @apply max-w-[1550px] mx-auto md:w-calc-[3.5rem] w-calc-[2rem];
+}
+
+@utility ani-delay-* {
+  animation-delay: --value(--ani-delay- *);
+}
+
+@utility util-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-pink-400);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+@utility util-h-screen {
+  height: calc(var(--vh, 1vh));
+}
+
+@utility text-shadow-3x {
+  text-shadow: 0 0 30px rgba(45, 212, 191, 0.3);
 }

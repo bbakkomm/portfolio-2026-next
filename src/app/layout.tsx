@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark">
-      <body className="bg-[#171717] text-foreground min-h-screen">
+      <body className="bg-[#171717] text-foreground min-h-screen font-pretendard">
         <QueryProvider>
           <TooltipProvider>
             <MSWInitializer />

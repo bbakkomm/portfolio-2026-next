@@ -11,10 +11,10 @@ const Resume = () => {
     <div className="relative bg-[#171717] overflow-hidden">
       {/* 배경 */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-60"
         style={{ backgroundImage: "url(/img/heros/rt_01.jpg)" }}
       >
-        <div className="absolute inset-0 bg-linear-to-b from-[#171717]/60 to-[#171717]" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717]" />
       </div>
 
       <div className="flex-1 grid-layout pt-28 md:pt-36 pb-24 text-base leading-relaxed break-keep">

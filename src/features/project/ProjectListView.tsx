@@ -124,10 +124,10 @@ export default function ProjectListView({ projects }: { projects: ProjectMeta[] 
   return (
     <div className="relative bg-[#171717] overflow-hidden">
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-30"
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-60"
         style={{ backgroundImage: "url(/img/heros/rt_03.webp)" }}
       >
-        <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#171717]" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717]" />
       </div>
 
       <div className="relative flex flex-col grid-layout pt-50 md:pt-60 z-5">
