@@ -1,4 +1,4 @@
-import Image from "next/image";
+import LazyImage from "@/shared/components/lazy-image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -43,7 +43,7 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
             >
               <div className="lg:aspect-8/5 rounded-lg relative overflow-hidden transition-all">
                 {project.thumbnail && (
-                  <Image
+                  <LazyImage
                     src={imgUrlMapper({ thumbnail: project.thumbnail })}
                     alt={`${project.title} 프로젝트 썸네일`}
                     fill

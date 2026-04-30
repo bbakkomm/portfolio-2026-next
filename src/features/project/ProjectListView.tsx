@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
-import Image from "next/image";
+import LazyImage from "@/shared/components/lazy-image";
 import Link from "next/link";
 import { Search, X, SlidersHorizontal, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -38,7 +38,7 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
         <div className="flex flex-col justify-center gap-2 mb-4 lg:mb-10">
           {project.thumbnail && (
             <div className="lg:block hidden relative aspect-5/3 w-full overflow-hidden rounded-sm mb-3">
-              <Image
+              <LazyImage
                 src={imgUrlMapper({ thumbnail: project.thumbnail })}
                 alt={`${project.title} 프로젝트 썸네일`}
                 fill

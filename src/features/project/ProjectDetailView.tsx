@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import LazyImage from "@/shared/components/lazy-image";
 import Link from "next/link";
 import { Link2, ChevronLeft, Loader2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -9,7 +9,6 @@ import imgUrlMapper from "@/shared/lib/img-url";
 
 import type { ProjectDetailFull, STACK_TYPES } from "@/entities/project/model";
 import StackIconMapper from "@/shared/components/stack-icon-mapper";
-
 const DynamicProjectContent = dynamic(
   () => import("./DynamicProjectContent"),
   { ssr: false }
@@ -111,7 +110,7 @@ function ProjectThumbnail({ title, thumbnail }: { title: string; thumbnail: stri
     <div className="flex flex-col">
       <div className="relative aspect-5/3 rounded-2xl overflow-hidden">
         {thumbnail && (
-          <Image
+          <LazyImage
             src={imgUrlMapper({ thumbnail })}
             alt={`${title} 프로젝트 썸네일`}
             fill
