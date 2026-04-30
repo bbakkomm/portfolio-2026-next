@@ -9,7 +9,7 @@ import {
 
 const MY_LINKS = [
   {
-    to: "https://open.kakao.com/o/sq4skkTf",
+    to: "https://open.kakao.com/o/sYDa1Jsi",
     src: "/svg/kakao.svg",
     label: "오픈 카카오톡",
   },

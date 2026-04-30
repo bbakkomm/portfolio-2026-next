@@ -162,7 +162,7 @@ const GNBNavList = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <a
-                    href="https://open.kakao.com/o/sq4skkTf"
+                    href="https://open.kakao.com/o/sYDa1Jsi"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
