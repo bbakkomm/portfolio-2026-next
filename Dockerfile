@@ -10,8 +10,8 @@ RUN corepack enable pnpm
 
 # Copy package files
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
-# RUN pnpm install --frozen-lockfile
-RUN pnpm install --no-frozen-lockfile
+RUN pnpm install --frozen-lockfile
+# RUN pnpm install --no-frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
