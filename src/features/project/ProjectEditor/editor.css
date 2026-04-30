@@ -1058,7 +1058,7 @@
 
 .ProseMirror img {
   border-radius: 0.75rem;
-  cursor: zoom-in;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
