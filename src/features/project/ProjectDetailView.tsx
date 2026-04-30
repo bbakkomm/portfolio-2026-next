@@ -8,6 +8,7 @@ import { cn } from "@/shared/lib/cn";
 import imgUrlMapper from "@/shared/lib/img-url";
 
 import type { ProjectDetailFull, STACK_TYPES } from "@/entities/project/model";
+import StackIconMapper from "@/shared/components/stack-icon-mapper";
 
 const DynamicProjectContent = dynamic(
   () => import("./DynamicProjectContent"),
@@ -143,6 +144,7 @@ function TechStack({
                 key={idx}
                 className="flex items-center p-2 bg-zinc-800/30 gap-3 rounded-lg hover:bg-zinc-50/10 transition-colors"
               >
+                <StackIconMapper stackName={stack} className="size-3.5" />
                 <span className="text-xs text-zinc-400">{stack}</span>
               </div>
             ))}
