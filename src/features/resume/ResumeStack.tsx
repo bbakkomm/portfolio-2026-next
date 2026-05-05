@@ -9,10 +9,10 @@ const ResumeStack = () => (
     <div className="space-y-10">
       {TECH_STACK.map((cat, ci) => (
         <div key={ci}>
-          <h3 className="text-[17px] font-semibold tracking-[-0.01em] text-zinc-50 mb-2 mt-0">
+          <h3 className="text-[19px] font-semibold tracking-[-0.01em] text-zinc-50 mb-2 mt-0">
             {cat.title}
           </h3>
-          <p className="text-zinc-300 text-[14.5px] leading-[1.85] mb-0 break-keep">
+          <p className="text-zinc-300 text-[16.5px] leading-[1.85] mb-0 break-keep">
             {cat.desc}
           </p>
 
@@ -30,7 +30,7 @@ const ResumeStack = () => (
 
           <ul className="list-none p-0 m-0">
             {cat.points.map((pt, pi) => (
-              <li key={pi} className="text-[13.5px] text-zinc-400 py-0.5">
+              <li key={pi} className="text-[15.5px] text-zinc-400 py-0.5">
                 {pt}
               </li>
             ))}

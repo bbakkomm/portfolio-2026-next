@@ -236,23 +236,23 @@ export default function EditorToolbar({ editor, onImageUpload }: EditorToolbarPr
         <>
           <Sep />
           <Btn onClick={() => editor.chain().focus().addColumnBefore().run()} title="열 앞에 추가">
-            <span className="font-mono text-[10px] leading-none">+←</span>
+            <span className="font-mono text-[12px] leading-none">+←</span>
           </Btn>
           <Btn onClick={() => editor.chain().focus().addColumnAfter().run()} title="열 뒤에 추가">
-            <span className="font-mono text-[10px] leading-none">→+</span>
+            <span className="font-mono text-[12px] leading-none">→+</span>
           </Btn>
           <Btn onClick={() => editor.chain().focus().deleteColumn().run()} title="열 삭제">
-            <span className="font-mono text-[10px] leading-none">×|</span>
+            <span className="font-mono text-[12px] leading-none">×|</span>
           </Btn>
           <Sep />
           <Btn onClick={() => editor.chain().focus().addRowBefore().run()} title="행 위에 추가">
-            <span className="font-mono text-[10px] leading-none">+↑</span>
+            <span className="font-mono text-[12px] leading-none">+↑</span>
           </Btn>
           <Btn onClick={() => editor.chain().focus().addRowAfter().run()} title="행 아래에 추가">
-            <span className="font-mono text-[10px] leading-none">↓+</span>
+            <span className="font-mono text-[12px] leading-none">↓+</span>
           </Btn>
           <Btn onClick={() => editor.chain().focus().deleteRow().run()} title="행 삭제">
-            <span className="font-mono text-[10px] leading-none">×—</span>
+            <span className="font-mono text-[12px] leading-none">×—</span>
           </Btn>
           <Sep />
           <Btn onClick={() => editor.chain().focus().deleteTable().run()} title="표 삭제">

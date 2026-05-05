@@ -8,7 +8,7 @@ interface SectionLabelProps {
 const SectionLabel = ({ children, className }: SectionLabelProps) => (
   <p
     className={cn(
-      "text-[11px] font-bold tracking-[0.18em] uppercase text-pink-400 mb-6",
+      "text-[13px] font-bold tracking-[0.18em] uppercase text-pink-400 mb-6",
       className
     )}
   >

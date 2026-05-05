@@ -22,7 +22,7 @@ const ResumeEducation = () => {
         {visible.map((cert, i) => (
           <span
             key={i}
-            className="bg-zinc-800/60 border border-zinc-800 text-zinc-300 text-[12.5px] font-medium px-3 py-1.5 rounded-full"
+            className="bg-zinc-800/60 border border-zinc-800 text-zinc-300 text-[14.5px] font-medium px-3 py-1.5 rounded-full"
           >
             {cert}
           </span>
@@ -31,7 +31,7 @@ const ResumeEducation = () => {
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="text-zinc-500 text-[12.5px] py-1.5 px-1 cursor-pointer hover:text-pink-400 transition-colors bg-transparent border-none"
+            className="text-zinc-500 text-[14.5px] py-1.5 px-1 cursor-pointer hover:text-pink-400 transition-colors bg-transparent border-none"
           >
             {expanded ? "접기" : `외 ${hiddenCount}더보기`}
           </button>
@@ -43,7 +43,7 @@ const ResumeEducation = () => {
         {EDUCATIONS.map((edu, i) => (
           <li
             key={i}
-            className="relative text-zinc-300 text-[13.5px] py-1.5 pl-[18px] before:content-['※'] before:absolute before:left-0 before:top-[6px] before:text-zinc-500 before:text-[11px]"
+            className="relative text-zinc-300 text-[15.5px] py-1.5 pl-[18px] before:content-['※'] before:absolute before:left-0 before:top-[6px] before:text-zinc-500 before:text-[13px]"
           >
             {edu}
           </li>

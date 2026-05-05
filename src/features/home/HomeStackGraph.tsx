@@ -104,7 +104,7 @@ export default function HomeStackGraph() {
                     </span>
                     <span
                       className={cn(
-                        "text-[10px] font-bold leading-none",
+                        "text-[12px] font-bold leading-none",
                         e.textColor,
                         idx === 0 && "text-zinc-800"
                       )}
@@ -113,7 +113,7 @@ export default function HomeStackGraph() {
                     </span>
                   </>
                 ) : (
-                  <span className={cn("text-[10px] font-bold", e.textColor)}>
+                  <span className={cn("text-[12px] font-bold", e.textColor)}>
                     {e.percent}%
                   </span>
                 )}

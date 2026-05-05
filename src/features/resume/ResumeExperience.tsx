@@ -21,12 +21,12 @@ const ResumeExperience = () => (
             {exp.groups.map((group, gi) => (
               <div key={gi}>
                 {group.title && (
-                  <h3 className="text-[17px] font-semibold tracking-[-0.01em] text-zinc-50 mb-1.5 mt-0">
+                  <h3 className="text-[19px] font-semibold tracking-[-0.01em] text-zinc-50 mb-1.5 mt-0">
                     {group.title}
                   </h3>
                 )}
                 {group.summary && (
-                  <p className="text-[13.5px] text-zinc-400 leading-[1.7] mb-2 break-keep">
+                  <p className="text-[15.5px] text-zinc-400 leading-[1.7] mb-2 break-keep">
                     {group.summary}
                   </p>
                 )}
