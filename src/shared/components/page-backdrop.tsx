@@ -10,10 +10,12 @@ if (typeof window !== "undefined") {
 
 interface PageBackdropProps {
   imageSrc?: string;
+  imageOpacity?: number;
 }
 
 export default function PageBackdrop({
   imageSrc = "/img/heros/bbt_38_1920.webp",
+  imageOpacity = 60,
 }: PageBackdropProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -42,8 +44,8 @@ export default function PageBackdrop({
     >
       <div
         ref={imgRef}
-        className="absolute inset-0 bg-cover bg-center opacity-60 will-change-transform transform-gpu"
-        style={{ backgroundImage: `url(${imageSrc})` }}
+        className="absolute inset-0 bg-cover bg-center will-change-transform transform-gpu"
+        style={{ backgroundImage: `url(${imageSrc})`, opacity: imageOpacity / 50 }}
       />
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717]" />
     </div>
