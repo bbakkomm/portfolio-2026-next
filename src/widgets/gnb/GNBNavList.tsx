@@ -18,6 +18,7 @@ interface NavPage {
 const NAVPAGE_OBJECT: NavPage[] = [
   { path: "/resume", pathName: "Resume", AuthPage: false },
   { path: "/work", pathName: "Work", AuthPage: false },
+  { path: "/blog", pathName: "Blog", AuthPage: false },
   { path: "/admin", pathName: "admin", AuthPage: true },
 ];
 
