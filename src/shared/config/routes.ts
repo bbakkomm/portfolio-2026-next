@@ -3,6 +3,7 @@
 export const ROUTES = {
   HOME: "/",
   WORK: "/work",
+  BLOG: "/blog",
   RESUME: "/resume",
   LOGIN: "/login",
   ADMIN: "/admin",
@@ -21,5 +22,6 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { label: "Resume", href: ROUTES.RESUME, authOnly: false },
   { label: "Work", href: ROUTES.WORK, authOnly: false },
+  { label: "Blog", href: ROUTES.BLOG, authOnly: false },
   { label: "Admin", href: ROUTES.ADMIN, authOnly: true },
 ];
