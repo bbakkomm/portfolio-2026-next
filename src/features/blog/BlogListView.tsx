@@ -68,7 +68,7 @@ export default function BlogListView({ posts, tags, categories }: BlogListViewPr
 
   return (
     <div className="relative bg-[#171717] overflow-clip min-h-screen">
-      <PageBackdrop imageSrc="/img/heros/rt_03.webp" />
+      <PageBackdrop imageSrc="/img/heros/rt_001_11zon.webp" />
 
       <div className="relative flex flex-col grid-layout pt-50 md:pt-60 z-5 pb-20">
         {/* 헤더 */}

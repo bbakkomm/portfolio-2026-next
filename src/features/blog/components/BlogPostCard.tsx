@@ -12,7 +12,7 @@ export default function BlogPostCard({ post }: { post: BlogPostListItem }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col border border-foreground/10 rounded-xl overflow-hidden hover:border-foreground/30 transition-colors"
+      className="group flex flex-col bg-zinc-900 border border-foreground/10 rounded-xl overflow-hidden hover:border-foreground/30 transition-colors"
     >
       {/* 썸네일 */}
       <div className="relative aspect-video bg-foreground/5 overflow-hidden">
