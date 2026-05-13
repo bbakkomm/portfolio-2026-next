@@ -163,7 +163,7 @@ export const EXPERIENCE: Company[] = [
     company: "이글루코퍼레이션 — 보안관제팀 사원",
     meta: "BC카드 상주 · 2020.03 — 2021.03 · 1년",
     role: "정보보안관제",
-    stack: "FireEYE, TippingPoint, NMS",
+    stack: "Python, FireEYE, TippingPoint, NMS",
     groups: [
       {
         title: "보고서 / 일일점검 / 장비백업",

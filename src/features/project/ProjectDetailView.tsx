@@ -57,7 +57,7 @@ function ProjectDescription({ description }: { description: string }) {
   return (
     <div className="flex flex-col gap-3 mt-5">
       <p className="text-sm text-zinc-400 mt-3">프로젝트 설명</p>
-      <p className="text-sm text-zinc-300 leading-relaxed mb-10 max-w-[750px] break-keep">
+      <p className="text-sm text-zinc-300 leading-loose mb-10 max-w-[750px] break-keep">
         {description}
       </p>
     </div>
@@ -78,7 +78,7 @@ function ProjectMeta({
   const duration = getDurationDays(startDate, endDate);
 
   return (
-    <article className="flex flex-col gap-6 my-5">
+    <article className="flex flex-col gap-6 my-10">
       <div className="flex flex-col gap-2">
         <p className="text-sm text-zinc-400">작업기간 &amp; 유지보수</p>
         <p className="text-sm text-zinc-100">{duration}일</p>
@@ -133,7 +133,7 @@ function TechStack({
   const allStacks = Object.values(grouped).flat();
 
   return (
-    <article className="space-y-6 pb-15">
+    <article className="space-y-6">
       <h3 className="text-sm text-zinc-400">사용 기술</h3>
       <div className="flex flex-wrap gap-2 mt-2">
         <div className={cn("gap-2 w-full")}>
@@ -170,65 +170,74 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
   };
 
   return (
-    <section className="pt-30 grid-layout flex-col md:mt-auto pb-10 grid lg:grid-cols-[220px_1fr] lg:gap-15">
-      <div>
-        <div className="lg:sticky top-30">
-          <Link
-            href={ROUTES.WORK}
-            className="flex items-center text-sm gap-2 hover:text-indigo-300 text-zinc-400"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            뒤로가기
-          </Link>
-          <h1 className="text-3xl md:text-3xl font-semibold text-white tracking-tight leading-relaxed pt-15 break-keep">
-            {project.title}
-          </h1>
-          <ProjectDescription description={project.description} />
-          <ProjectMeta
-            startDate={project.start_date}
-            endDate={project.end_date}
-            member={project.project_member}
-            url={project.projectUrl ?? (project as any).project_url ?? ""}
-          />
-          {authentication && (
-            <div className="flex gap-2 mt-6">
-              <Button asChild variant="outline" size="sm">
-                <Link href={`/admin/project/${project.id}/edit`}>수정</Link>
-              </Button>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm" disabled={isDeletePending}>
-                    {isDeletePending ? <Loader2 className="size-3 animate-spin" /> : "삭제"}
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>프로젝트를 삭제하시겠습니까?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      삭제된 프로젝트는 복구할 수 없습니다.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>취소</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete}>삭제</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          )}
-        </div>
+    <section className="pt-20 lg:pt-30 grid-layout pb-10">
+      {/* 뒤로가기 + 제목 */}
+      <div className="py-8 lg:py-10">
+        <Link
+          href={ROUTES.WORK}
+          className="flex items-center text-sm gap-2 hover:text-indigo-300 text-zinc-400"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          뒤로가기
+        </Link>
+        <h1 className="text-2xl md:text-3xl font-semibold text-white tracking-tight leading-relaxed pt-8 lg:pt-15 break-keep">
+          {project.title}
+        </h1>
       </div>
 
-      <div className="pt-5 lg:pt-20">
-        <div className="flex flex-col gap-6 md:gap-12 mt-3">
-          <ProjectThumbnail title={project.title} thumbnail={project.thumbnail} />
-          {project.project_meta_stack?.length > 0 && (
-            <TechStack stacks={project.project_meta_stack} />
+      {/* 모바일: flex-col(DOM 순서대로) / 데스크탑: grid 2컬럼 */}
+      <div className="flex flex-col lg:grid lg:grid-cols-[220px_1fr] lg:gap-15">
+        {/* 메인 콘텐츠: DOM 첫번째 → 모바일에서 위에 표시 */}
+        <div className="lg:order-2 pt-2 lg:pt-14 min-w-0">
+          <div className="flex flex-col gap-8 lg:gap-12">
+            <ProjectThumbnail title={project.title} thumbnail={project.thumbnail} />
+            {project.project_meta_stack?.length > 0 && (
+              <TechStack stacks={project.project_meta_stack} />
+            )}
+            <ProjectDescription description={project.description} />
+          </div>
+          {project.project_contents?.[0]?.contents && project.project_contents[0].contents.length > 10 && (
+            <DynamicProjectContent contents={project.project_contents[0].contents} />
           )}
         </div>
-        {project.project_contents?.[0]?.contents && project.project_contents[0].contents.length > 10 && (
-          <DynamicProjectContent contents={project.project_contents[0].contents} />
-        )}
+
+        {/* 사이드바: DOM 두번째 → 모바일에서 아래, 데스크탑에서 왼쪽 */}
+        <div className="lg:order-1">
+          <div className="lg:sticky lg:top-30">
+            <ProjectMeta
+              startDate={project.start_date}
+              endDate={project.end_date}
+              member={project.project_member}
+              url={project.projectUrl ?? (project as any).project_url ?? ""}
+            />
+            {authentication && (
+              <div className="flex gap-2 mt-6">
+                <Button asChild variant="outline" size="sm">
+                  <Link href={`/admin/project/${project.id}/edit`}>수정</Link>
+                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="sm" disabled={isDeletePending}>
+                      {isDeletePending ? <Loader2 className="size-3 animate-spin" /> : "삭제"}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>프로젝트를 삭제하시겠습니까?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        삭제된 프로젝트는 복구할 수 없습니다.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>취소</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDelete}>삭제</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

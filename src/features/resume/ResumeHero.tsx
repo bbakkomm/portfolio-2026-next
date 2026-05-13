@@ -48,7 +48,7 @@ export default function ResumeHero() {
           대규모 트래픽이 발생하는 서비스의 프론트엔드를 담당했습니다.
         </p>
         <p className="text-zinc-300 text-[16.5px] leading-[1.85] m-0 break-keep">
-          JavaScript / jQuery 기반의 운영·유지보수 경험을 바탕으로 React 생태계로 영역을 넓혀가며,
+          JavaScript / jQuery 기반의 운영·유지보수 경험을 바탕으로 React, Next 생태계로 영역을 넓혀가며,
           모듈화·코드 리팩토링·로딩 성능 개선·접근성(TalkBack/ScreenReader) 적용 등{" "}
           <span className="text-zinc-50 font-normal">유지 가능하고 견고한 프론트엔드</span>를 구축하기 위해
           꾸준히 역량을 확장하고 있습니다.
