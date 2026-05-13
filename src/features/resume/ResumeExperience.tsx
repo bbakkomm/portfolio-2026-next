@@ -22,7 +22,7 @@ const ResumeExperience = () => (
             </blockquote>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-12">
             {exp.groups.map((group, gi) => (
               <GroupAccordion key={gi} group={group} defaultExpanded={ci === 0} />
             ))}
