@@ -40,6 +40,7 @@ import {
   siOpencv,
   siGreensock,
   siWordpress,
+  siMongodb
 } from "simple-icons";
 
 // HomeStack에서 타입 참조용으로 사용
@@ -78,7 +79,8 @@ export type StackName =
   | "python"
   | "claude-code"
   | "mysql"
-  | "phpmyadmin";
+  | "phpmyadmin"
+  | "mongodb";
 
 type SiIcon = { path: string; hex: string; title: string };
 
@@ -123,6 +125,7 @@ const SI_LOOKUP: Record<string, SiIcon> = {
   opencv: siOpencv,
   greensock: siGreensock,
   wordpress: siWordpress,
+  mongodb: siMongodb
 };
 
 // normalize된 키가 simple-icons slug와 다를 때만 매핑

@@ -39,10 +39,12 @@ const STACKS: StackGroup[] = [
       "프론트엔드 개발자로서 백엔드 아키텍처와 데이터 흐름을 이해하며, 협업 과정의 효율성과 기술적 시야를 넓혀가고 있습니다.",
     stacks: [
       { name: "node.js", description: "API 및 서버 환경 구성" },
-      { name: "nest.js", description: "Layered 구조와 Guard, DTO 설계" },
-      { name: "drizzleorm", description: "타입 안전한 ORM 기반 쿼리 및 마이그레이션" },
+      { name: "mysql", description: "RDBMS·트랜잭션 기반 데이터 관리" },
+      { name: "mongodb", description: "NoSQL 데이터베이스 관리" },
       { name: "postgresql", description: "RDBMS·트랜잭션 기반 데이터 관리" },
       { name: "supabase", description: "BaaS 인증 및 스토리지 관리" },
+      // { name: "nest.js", description: "Layered 구조와 Guard, DTO 설계" },
+      // { name: "drizzleorm", description: "타입 안전한 ORM 기반 쿼리 및 마이그레이션" },
     ],
   },
   {
@@ -64,7 +66,7 @@ const STACKS: StackGroup[] = [
       "AI 도구를 활용한 개발 효율화와 자동화에 관심을 가지고, 일상적인 워크플로우에 적용하며 프로덕트 품질을 끌어올리는 데 활용합니다.",
     stacks: [
       { name: "python", description: "데이터 처리 및 자동화 스크립트 작성" },
-      { name: "claude-code", description: "AI 페어 프로그래밍 및 리뷰 자동화" },
+      { name: "claude-code", description: "AI 페어 프로그래밍 및 자동화 프로그램 제작" },
     ],
   },
 ];
