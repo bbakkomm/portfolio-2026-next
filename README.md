@@ -94,17 +94,3 @@ git push
 빌드는 GitHub Actions 러너가 처리해 NAS 부하를 0으로 유지. Watchtower는 이미지 다이제스트 변경 시에만 교체를 수행한다.
 
 ---
-
-## 이 스프린트에서 배운 것
-
-- **Next.js 16 라우트 캐시 모델** — `revalidatePath`의 `'page'` vs `'layout'` 차이를 디버깅으로 직접 체득.
-- **Server Actions + RSC 사고 전환** — 폼 제출이 서버 렌더링 트리거가 된다는 감각.
-- **자가 호스팅 도커 파이프라인 전체 그림** — 빌드·저장·polling·교체·SSL 흐름을 처음으로 직접 구성.
-- **로컬 vs CI 환경 차이** — pnpm 버전 불일치, `patches/` 폴더 누락, `NEXT_PUBLIC_*` 빌드타임 베이킹은 모두 "내 노트북에서는 되는데"가 통하지 않는 영역.
-
-
----
-
-## 레퍼런스
-
-- 디자인 레퍼런스: [phm6530/portfolio-ver-2025](https://github.com/phm6530/portfolio-ver-2025)
