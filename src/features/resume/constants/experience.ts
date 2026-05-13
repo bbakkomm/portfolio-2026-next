@@ -380,6 +380,7 @@ export const EXPERIENCE: Company[] = [
     meta: "BC카드 상주 · 2020.03 — 2021.03 · 1년",
     role: "정보보안관제",
     stack: "Python, FireEYE, TippingPoint, NMS",
+    summary: "이글루코퍼레이션 소속으로 BC카드 보안관제 센터에 상주 파견, 카드사 인프라 전반의 보안 이벤트를 24시간 모니터링·대응. 정기 보고서(일/주/월) 작성과 F/W·IPS·WAF 장비 백업 등 정형 업무 외에, 취약점 점검·일괄차단 IP 리스트 추출 등 반복 업무를 Python 웹프로그램으로 자동화해 운영 효율과 휴먼 에러 방지를 개선. APT 공격 대응(FireEYE EX/NX, Spamsniper), Spoofed DDoS·SYN Port Scan 등 실 공격 시나리오 분석 경험.",
     groups: [
       {
         title: "보고서 / 일일점검 / 장비백업",
@@ -429,23 +430,90 @@ export const EXPERIENCE: Company[] = [
     meta: "2017.10 — 2018.12 · 1년 3개월",
     role: "PHP 개발",
     stack: "JavaScript, PHP, MySQL, phpMyAdmin",
+    summary: "첫 직장으로 PHP·MySQL 기반의 클라이언트 사이트 런칭·이관·데이터 마이그레이션을 단독 진행. 1년 3개월간 병원·학회·프랜차이즈·제조 기업 등 15개 이상 도메인의 사이트를 다뤘으며, 디자이너·기획자·대표자와 직접 커뮤니케이션하며 요구를 받아 클라이언트 응대 → 설계 → 개발 → 운영 인계까지 한 사람이 책임지는 형태. 다국어(KOR·ENG·CHN·JPN), 카카오맵·SMS·Vimeo 등 외부 API 연동, Gnuboard 커스터마이징, 비개발자 운영자가 직접 다룰 수 있는 어드민 UI 설계 등을 반복 경험하며 작은 단위 풀스택 운영 역량을 쌓음.",
     groups: [
       {
         title: "클라이언트 사이트 런칭",
         summary:
           "병원·기업·학회·프렌차이즈 등 15개 이상의 클라이언트 사이트의 런칭·이관·데이터 마이그레이션을 단독 진행했습니다. (비인가 및 클로즈된 사이트 제외)",
         projects: [
-          { name: "이화수 육개장 (ihwasoo.com)", desc: "프랜차이즈 사이트 리뉴얼 / 181개 매장 DB 재설계 및 통합 / 카카오맵 API 커스터마이징 / 창업 문의 SMS 자동화", showArrow: true },
-          { name: "국제통합의과학회 (imsacademy.net)", desc: "학회 사이트 신규 구축 / 7단계 회원 등급 권한 체계 / 승인제 회원가입 운영 / Vimeo 영상 자료실 연동", showArrow: true },
-          { name: "대전시립노인병원 (ilovenoin.com)", desc: "병원 홈페이지 런칭 / 진료일정표 캘린더 관리자 편집 / 자원봉사 신청 정원 제한·자동 마감 / 카카오톡 오픈채팅 연동", showArrow: true },
-          { name: "유성한가족병원 (han.or.kr)", desc: "병원 홈페이지 런칭 / 의료진 근무표 관리자 편집 UI / 반응형 (PC·Mobile) / IE11 대응", showArrow: true },
-          { name: "명신메디컬 (msmedi.com)", desc: "의료기기 회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG·CHN) / Gnuboard 유튜브 임베드 모듈 제작 / 비개발자 운영자용 제품 등록 폼", showArrow: true },
-          { name: "두타기술 (duta-rnd.com)", desc: "회사 홈페이지 런칭 / 다국어 적용 (ENG·KOR, 영문 디폴트) / 가변 사양표 DB 1:N 설계 / 비개발자 어드민 운영", showArrow: true },
-          { name: "대원산업 (daewonic.com)", desc: "회사 홈페이지 리뉴얼 / 다국어 적용 (KOR·ENG·CHN) / 호스팅 트래픽 제한 하 이미지 최적화 / IE11 인터랙션 단계적 대응 합의", showArrow: true },
-          { name: "오픈엠 (openm.com)", desc: "회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG) / 카카오맵 연동 / Gnuboard 게시판 다국어 분리 운영", showArrow: true },
-          { name: "BMST (bmst.co.kr)", desc: "회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG·CHN·JPN) / 연간 관리 일정 운영자 편집 UI / E-book·카탈로그 디지털 배포", showArrow: true },
-          { name: "김형제 (kimbro.co.kr)", desc: "프랜차이즈 본사 홈페이지 런칭 / 가맹 모집 중심 IA 설계 / 매출 지표 시각화 / 지역 필터 슬러그 상수화로 휴먼 에러 차단", showArrow: true },
-          { name: "여수요양병원 (newstart.co.kr)", desc: "병원 홈페이지 런칭 / 보호자 동선 중심 IA 재설계 / Gnuboard 스킨 커스터마이징 / 게시판 스팸 필터링", showArrow: true },
+          { 
+            name: "이화수 육개장", desc: "프랜차이즈 사이트 리뉴얼 / 181개 매장 DB 재설계 및 통합 / 카카오맵 API 커스터마이징 / 창업 문의 SMS 자동화", showArrow: true,
+            link: { 
+              href: "http://ihwasoo.com/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "국제통합의과학회", desc: "학회 사이트 신규 구축 / 7단계 회원 등급 권한 체계 / 승인제 회원가입 운영 / Vimeo 영상 자료실 연동", showArrow: true,
+            link: { 
+              href: "https://www.imsacademy.net/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "대전시립노인병원", desc: "병원 홈페이지 런칭 / 진료일정표 캘린더 관리자 편집 / 자원봉사 신청 정원 제한·자동 마감 / 카카오톡 오픈채팅 연동", showArrow: true,
+            link: { 
+              href: "http://www.ilovenoin.com/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "유성한가족병원", desc: "병원 홈페이지 런칭 / 의료진 근무표 관리자 편집 UI / 반응형 (PC·Mobile) / IE11 대응", showArrow: true,
+            link: { 
+              href: "http://han.or.kr", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "명신메디컬", desc: "의료기기 회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG·CHN) / Gnuboard 유튜브 임베드 모듈 제작 / 비개발자 운영자용 제품 등록 폼", showArrow: true,
+            link: { 
+              href: "http://www.msmedi.com/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "두타기술", desc: "회사 홈페이지 런칭 / 다국어 적용 (ENG·KOR, 영문 디폴트) / 가변 사양표 DB 1:N 설계 / 비개발자 어드민 운영", showArrow: true,
+            link: { 
+              href: "http://www.duta-rnd.com/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "대원산업", desc: "회사 홈페이지 리뉴얼 / 다국어 적용 (KOR·ENG·CHN) / 호스팅 트래픽 제한 하 이미지 최적화 / IE11 인터랙션 단계적 대응 합의", showArrow: true,
+            link: { 
+              href: "http://daewonic.com", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "오픈엠", desc: "회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG) / 카카오맵 연동 / Gnuboard 게시판 다국어 분리 운영", showArrow: true,
+            link: { 
+              href: "http://openm.com/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "BMST", desc: "회사 홈페이지 런칭 / 다국어 적용 (KOR·ENG·CHN·JPN) / 연간 관리 일정 운영자 편집 UI / E-book·카탈로그 디지털 배포", showArrow: true,
+            link: { 
+              href: "http://bmst.co.kr", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "김형제", desc: "프랜차이즈 본사 홈페이지 런칭 / 가맹 모집 중심 IA 설계 / 매출 지표 시각화 / 지역 필터 슬러그 상수화로 휴먼 에러 차단", showArrow: true,
+            link: { 
+              href: "http://kimbro.co.kr/", 
+              label: "Web URL" 
+            },
+          },
+          { 
+            name: "여수요양병원", desc: "병원 홈페이지 런칭 / 보호자 동선 중심 IA 재설계 / Gnuboard 스킨 커스터마이징 / 게시판 스팸 필터링", showArrow: true,
+            link: { 
+              href: "http://www.newstart.co.kr/", 
+              label: "Web URL" 
+            },
+          },
         ],
       },
     ],
@@ -460,8 +528,12 @@ export const EXPERIENCE: Company[] = [
         title: "",
         projects: [
           {
-            name: "사이언스스타 (sstar.biz)",
+            name: "사이언스스타",
             desc: "쇼핑몰 리뉴얼 / 학년·학기별 단원 매핑 IA / 견적서·품의서 JPG 출력 (html2canvas) / CS 문의 90%+ 감소",
+            link: { 
+              href: "http://sstar.biz/", 
+              label: "Web URL" 
+            },
           },
         ],
       },
