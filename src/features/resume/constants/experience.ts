@@ -1,13 +1,20 @@
+export interface SubItem {
+  name: string;
+  desc?: string;
+}
+
 export interface Project {
   name: string;
   desc?: string;
   link?: { href: string; label: string };
   showArrow?: boolean;
+  subItems?: SubItem[];
 }
 
 export interface Group {
   title: string;
   summary?: string;
+  link?: { href: string; label: string };
   projects: Project[];
 }
 
@@ -16,6 +23,7 @@ export interface Company {
   meta: string;
   role: string;
   stack: string;
+  summary?: string;
   groups: Group[];
 }
 
@@ -24,72 +32,204 @@ export const EXPERIENCE: Company[] = [
     company: "비스톤스 — 테크2팀 선임",
     meta: "PTKOREA 파견 상주 · 2023.10 — 2026.02 · 2년 5개월",
     role: "프론트엔드 개발 (삼성닷컴 모듈 제작 및 운영)",
-    stack: "JavaScript, Sass",
+    stack: "JavaScript, Jquery, Sass",
+    summary:
+      "다수 외주사가 공존하는 레거시 환경에서 삼성닷컴 제품 판매 페이지의 프론트엔드 운영을 담당. 기획자·디자이너·백엔드·QA·원청(삼성) 담당자와 직접 커뮤니케이션하며, 매월 변경되는 요구사항에 대응하기 위한 모듈·내부 도구를 설계·운영.",
     groups: [
       {
-        title: "삼성닷컴 통합, 프로모션 런칭 및 운영 / 고도화",
+        title: "사내 공통 인프라 — bs_common.js 폴드 대응 확장 및 공통 모듈군 배포",
+        summary: "입사 시점 사내 표준 공통 모듈인 bs_common.js 는 PC·모바일 2단 브레이크포인트만 지원하던 구조였음. 폴드 디바이스(769–802px) 대응 분기를 추가하고, pxToVw 의 폴드 분기 처리·isFold 유틸 추가 등으로 사내 표준을 확장 배포. 이후 페이지 단위로 반복되던 패턴들을 공통 모듈로 분리해 사내에 develop·배포",
+        projects: [
+          {
+            name: "video.js / tab.js / sticky.js / benefitSwiper.js 등 공통 모듈군",
+            desc: "각 프로젝트마다 비슷하게 복사되던 영상 재생·탭 전환·스티키 헤더·혜택 슬라이드 패턴을 표준 모듈로 추출",
+          },
+          {
+            name: "JSDoc 기반 문서화 규약 유지 (@param / @returns / @example / @deprecated / @version)",
+            desc: "다른 개발자·퍼블리셔가 코드만 읽고 사용법을 파악할 수 있도록 함수 단위로 문서화",
+          },
+          {
+            name: "전역 상태 객체 PT_STATE.eventState",
+            desc: "setEventState/getEventState 로 캡슐화된 이벤트 상태 관리 패턴 정착",
+          },
+        ],
+        link: { 
+          href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/tree/master/module/common", 
+          label: "GitHub Repository" 
+        },
+      },
+      {
+        title: "구매 모듈 v2 — 멀티 인스턴스 SKU 옵션 셀렉터 프레임워크",
         summary:
-          "삼성닷컴 내 가장 제품 판매 매출이 높은 페이지의 메인 운영을 진행하며, 서버/백엔드 담당자와 지속적인 트래킹 체크 및 넷퍼넬을 적용했습니다. 매월 변경되는 고객 요구사항 대응을 위해 확장성과 의존성을 고려한 유연·독립적인 함수 및 모듈화를 적용해 페이지 로딩 속도를 개선했습니다.",
+          "삼성닷컴·갤럭시 캠퍼스 등 다채널에서 사용 중이던 기존 구매 모듈은 한 페이지에 하나만 배치 가능한 단일 인스턴스 구조였음. 운영 중 고객사 요구가 '한 페이지에 2–3개 커스텀 배치' 로 확장되며 기존 구조로 대응 불가, 타 외주사가 시도 후 실패하거나 처음부터 대응 불가로 판단한 케이스가 우리 팀으로 안분된 작업. 데이터 가공 레이어와 UI 렌더링 레이어를 분리한 클래스 기반 프레임워크로 재설계.",
         projects: [
           {
-            name: "통합런칭 — 삼성 TV",
-            link: {
-              href: "https://www.samsung.com/sec/event/2024-tv-launching/",
-              label: "samsung.com/sec/event/2024-tv-launching",
+            name: "클래스 인스턴스화로 다중 배치 지원",
+            desc: "setDataTool 클래스를 셀렉터 기반으로 인스턴스화해, 한 페이지에 N개 인스턴스가 충돌 없이 공존 (실 운영 페이지에서 동시 10개 이상 인스턴스 가동 검증)",
+          },
+          {
+            name: "옵션 의존성 체인 자동 해결",
+            desc: "컬러·옵션A·옵션B 등 다단계 옵션 간 유효 조합을 단계적으로 필터링해, 사용자가 어떤 순서로 선택해도 모순된 조합이 만들어지지 않도록 처리. 단일 후보 자동 선택·무효 선택 자동 해제·기본값 폴백 규칙 내장",
+          },
+          {
+            name: "그룹별 동작 정책 분리 (config.strictChain 등)",
+            desc: "고객사가 그룹마다 다른 노출·동작 규칙을 요구해도 핵심 코드 수정 없이 config 값으로 대응 가능",
+          },
+          {
+            name: "data-tool-* 어트리뷰트 컨벤션",
+            desc: "마크업만 보고 역할이 읽히는 일관된 데이터 어트리뷰트 설계로, 사내 퍼블리셔·다른 개발자의 인수인계·운영 부담 최소화",
+          },
+          {
+            name: "다중 디바이스 대응",
+            desc: "PC·모바일·폴드 디바이스별 노출 개수 차등 적용, 모바일 2열 레이아웃에서 팝업이 화면 밖으로 이탈하지 않도록 위치 보정 로직 포함",
+          },
+        ],
+        link: { 
+          href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/tree/master/module/buying_tool", 
+          label: "GitHub Repository" 
+        },
+      },
+      {
+        title: "운영 자동화 — Excel to Json 변환 모듈 (v1.0 → v6.1)",
+        summary:
+          "기획자가 전달하는 엑셀 DB를 개발자가 JSON으로 수작업 변환하던 기존 프로세스를 자동화. 자체 설계한 구매 모듈 v2 가 소비하는 JSON 구조에 맞춰 변환 규칙·검증 로직을 정의, 기획자 엑셀 → 자동 변환·검증 JSON → 모듈 렌더링 의 무중단 운영 파이프라인을 한 사람이 일관되게 설계. 사내에 유사 도구가 존재했으나 타 외주사가 배포한 정적 도구로, 문서·기술 정보가 공유되지 않고 타입 에러 발생 시 빈 화면으로 다운되는 구조였음. 외부 도움 요청이 불가한 환경이었기에 기존 코드를 처음부터 분석·분해·재조립한 뒤 새 도구를 설계.",
+        projects: [
+          {
+            name: "7단계 검증 파이프라인",
+            desc: "변환 자체보다 '잘못된 데이터를 사전에 막는 것' 이 핵심 목적. 행 길이 일관성 → 공백·짝수(Key-Value) 검사 → 모드별 필수 키 존재 검증 → 헤더 기준 키 일관성 검사(첫 행을 기준으로 전 행의 키 순서·이름 검증) → 엑셀 에러값 9종 탐지(#DIV/0!, #REF!, #VALUE! 등 — 기획자가 인지 못하고 복사한 수식 오류 차단) → 대표 SKU(def === 'O') 중복·누락 검증 → JSON 직렬화. 각 단계에서 실패 시 x줄, 키 불일치: optCdA (예상: optCdB) 형태로 에러 위치·원인을 동시에 리턴",
+          },
+          {
+            name: "두 가지 운영 모드 지원",
+            desc: "구매 모듈 v2의 옵션형·그룹형 데이터 형식에 각각 대응. 옵션형은 전체에서 대표 SKU 1개, 그룹형은 그룹마다 대표 SKU 1개를 검증해 모듈 렌더링 시점의 런타임 에러를 변환 단계에서 차단",
+          },
+          {
+            name: "시각 검증 UI",
+            desc: "변환 전 데이터를 컬럼별 카드로 펼쳐, 컬럼명·유니크 값 개수·각 값의 등장 횟수를 한눈에 확인 가능. '숫자로 잡히는 에러' 와 '눈으로 봐야 잡히는 에러' 를 동시에 방어",
+          },
+          {
+            name: "optCheck JSON 보조 산출물",
+            desc: "optCd* 컬럼의 유니크 값을 별도 JSON으로 자동 추출해, 구매 모듈 v2가 옵션 후보(컬러·옵션A·옵션B)를 구성할 때 사용. 두 모듈 간 데이터 연계를 도구 레벨에서 자동화",
+          },
+          {
+            name: "카테고리 트리 자동 생성 (objCatGrp)",
+            desc: "cat/grp 기반 데이터를 카테고리 → 그룹 → 옵션 키별 유니크 값 트리로 변환해, v2의 mergeData 구조에 그대로 투입 가능",
+          },
+          {
+            name: "사내 배포",
+            desc: "배포 후 이슈 수집·반영을 통해 v6.1까지 develop, 팀 내 휴먼 에러율 0% 달성. 100줄/20+ 컬럼 엑셀의 육안 디버깅 시간(약 30분–1시간) 제거",
+          },
+          {
+            name: "운영 UX",
+            desc: "클래스 구조로 재설계, 자주 쓰는 키 이름(grp, def, default)을 localStorage에 영속화, 로딩 인디케이터·클립보드 복사 상태 피드백 포함 — 비개발자도 운영 가능한 형태로 마감",
+          },
+        ],
+        link: { 
+          href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/tree/master/excel%20to%20json", 
+          label: "GitHub Repository" 
+        },
+      },
+      {
+        title: "개발자 인스펙터 도구 — Tool Checker (?check=buying 활성화)",
+        summary:
+          "구매 모듈 v2 의 마크업 구조가 복잡해지면서, 운영 페이지에서 DOM과 데이터의 정합성을 즉시 확인할 수 있는 디버그 도구의 필요성 대두. 운영 페이지 코드에 상시 포함되어 있다가 URL에 ?check=buying 쿼리가 붙으면 화면 우상단에 검증 패널이 동적으로 주입되는 구조로 구현 — 배포 환경에서도 일반 사용자에게는 노출되지 않는 개발자 전용 모드.",
+        projects: [
+          {
+            name: "Excel to Json 산출물과 직결",
+            desc: "Excel to Json 도구가 추출한 optCheck JSON 을 그대로 입력으로 받음. Excel to Json → optCheck JSON → Tool Checker → 실제 페이지 의 일관된 검증 파이프라인 완성",
+          },
+          {
+            name: "4단계 계층 검증",
+            desc: "① data-opt-key 어트리뷰트 존재 여부 → ② JSON opt 개수와 data-opt-btn 개수 일치 여부(어느 쪽이 많고 적은지까지 보고) → ③ 각 옵션의 <input type='radio' name id value> + <label for> 5개 속성 정합성 → ④ JSON에 없는 잉여 data-opt-btn ID 추출",
+          },
+          {
+            name: "에러 위치 색상 표기",
+            desc: "정상은 파랑(#2188ff), 비정상은 빨강(#fa2337)으로 구분해 '어디가 틀렸는지' 한눈에 식별 가능",
+          },
+          {
+            name: "sessionStorage 영속화",
+            desc: "마지막 입력값을 유지해 코드 수정 → 새로고침 → 즉시 재검증 의 빠른 개발 루프 지원",
+          },
+          {
+            name: "사용 빈도",
+            desc: "대규모 마크업 변경 시 팀원이 활용. 일상적인 운영 도구라기보다 큰 구조 변경 시 휴먼 에러를 사전 차단하는 안전망 역할",
+          },
+        ],
+        link: { 
+          href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/blob/master/module/tool_checker/index.js", 
+          label: "GitHub Repository" 
+        },
+      },
+      {
+        title: "삼성닷컴 계열 채널 운영 및 통합 런칭",
+        summary:
+          "일반 소비자 채널인 삼성닷컴(samsung.com/sec)을 중심으로, 학생·교원 대상 교육할인몰인 갤럭시 캠퍼스, 임직원·B2B 고객사 대상 패밀리넷·패밀리몰 등 다층 판매 채널의 프론트엔드를 운영. 각 채널은 가격 정책·노출 상품·인증 구조가 달라 동일 캠페인이라도 채널별로 마크업과 스크립트를 분기 처리해야 했음. 이 중 삼성닷컴 내 최고 매출 페이지의 메인 운영을 담당하며, 통합 런칭 시 서버·백엔드 담당자와 트래킹·넷퍼널을 협의 적용하고, 매월 변경되는 요구사항에 대응하기 위해 확장성·독립성을 고려한 함수와 모듈화로 페이지 로딩 속도를 개선.",
+        projects: [
+          {
+            name: "대표 페이지 (URL은 시즌·캠페인에 따라 변경될 수 있음)",
+            desc: "이 중 삼성닷컴 내 최고 매출 페이지의 메인 운영을 담당하며, 통합 런칭 시 서버·백엔드 담당자와 트래킹·넷퍼널을 협의 적용하고, 매월 변경되는 요구사항에 대응하기 위해 확장성·독립성을 고려한 함수와 모듈화로 페이지 로딩 속도를 개선.",
+            subItems: [
+              { name: "신혼가전 허브", desc: "samsung.com/sec/event/wedding-festa (메인에서 분기되는 카테고리 진입점)" },
+              { name: "삼성 TV / 비스포크 냉장고 / 김치냉장고 외 다수 통합 런칭 페이지 운영"},
+            ],
+          },
+          {
+            name: "회원 등급 기반 채널 — 프론트단 1차 검증 레이어",
+            desc: "갤럭시 캠퍼스·패밀리넷은 회원 등급과 생년월일로 구매·접속이 제한되는 폐쇄형 채널. 서버단 미들웨어가 1차 차단을 담당했으나, 모든 요청이 서버까지 도달한 뒤 거절되는 구조.",
+            subItems: [
+              { name: "회원 API·로그인 정보를 받아 프론트단에서 1차 거름망 역할을 하도록 설계해 불필요한 서버 요청 이벤트를 축소", desc: "" },
+              { name: "백엔드 부하 감소와 사용자 응답 속도 개선 동시 달성", desc: "" },
+            ],
+          },
+          {
+            name: "패밀리넷 — 자회사 연계 제품 검색 모듈",
+            desc: "패밀리넷 본 사이트뿐 아니라 링크로 연결된 자회사 홈페이지에서도 동일하게 동작해야 하는 제품 검색 기능을 제작. 외부에서 임베드되어도 독립적으로 동작하도록 제품 API를 받아 자체 검색 레이어 구현.",
+            subItems: [
+              { name: "한글 초성 검색", desc: "분할 수신한 제품 데이터를 배열로 보유하고 filter로 순회 검색. 한글 유니코드 연산(AC00–D7A3 범위에서 초성 인덱스 추출)으로 자모를 분리해 'ㄱㄹㅅ' → '갤럭시' 매칭 구현" },
+              { name: "검색어 하이라이트", desc: "매칭 구간을 시각적으로 강조해 UX 개선" },
+              { name: "호출 빈도 제어", desc: "검색 입력에 디바운싱을 적용해 타이핑 중 연속 발생하는 요청을 묶고, 마지막 입력 시점에만 호출되도록 처리해 서버 부하 최소화" },
+              { name: "페이로드 최적화", desc: "전체 제품 카탈로그를 한 번에 받지 않고 페이지네이션(?page=1&size=100)으로 분할 수신, 응답에는 검색에 필요한 필드만 포함하도록 ?fields=id,name 형태로 요청. 클라이언트에서 반복 호출로 전체 데이터를 점진적으로 구성. 페이지네이션 방식이 데이터 변경 시 누락·중복 가능성이 있다는 한계는 인지하고 있었으나, 제품 카탈로그 갱신 주기가 길어 트레이드오프가 허용되는 도메인 특성을 고려해 채택." },
+            ],
+          },
+        ],
+        link: { 
+          href: "https://www.samsung.com/sec/event/wedding-festa/", 
+          label: "Web URL" 
+        },
+      },
+      {
+        title: "삼성닷컴 멤버십 프로모션 게임",
+        summary:
+          "기획자·디자이너와 직접 회의하며 기능 단위로 설계·구현. 1–2개월 주기로 교체되는 프로모션 페이지 특성을 고려해, 재사용 가능한 형태로 모듈화하고 이후 신규 런칭에 반복 활용. 클래스 기반 구조로 작성해 게임 인스턴스 단위로 데이터·상태·DOM을 독립 관리.",
+        projects: [
+          {
+            name: "오 마이 재질테스트 — 6타입 가중치 점수 진단 게임 (JavaScript / jQuery)",
+            desc: "'MBTI' 컨셉을 차용한 트래픽 유도 진단 게임. 단, 실제 알고리즘은 정통 MBTI 4축 이분법이 아닌 A–F 6타입 누적 점수 시스템으로 설계 — '재질테스트' 컨셉상 더 다양한 결과 분기가 필요했기 때문.",
+            subItems: [
+              { name: "6타입 가중치 누적", desc: "각 질문 옵션이 단일 타입이 아닌 복수 타입에 동시에 가중치 부여 가능. 10문제 후 누적 점수를 내림차순 정렬해 최고점 타입을 결과로 도출" },
+              { name: "양방향 네비게이션 + 상태 복원", desc: "사용자가 '이전' 버튼을 누르면 마지막 선택을 pop하고 이전 화면의 active 상태를 함께 복원. 단순 진단이 아닌 풀이 도중 자유로운 이동 지원" },
+              { name: "결과 이미지 프리로드", desc: "게임 시작 시점에 JSON에 정의된 결과 이미지를 미리 Image 객체로 로드해, 결과 화면 전환 시 깜빡임·로딩 지연 제거" },
+              { name: "다단계 omni 트래킹", desc: "질문 버튼·결과 화면·SNS 공유(공유/Facebook/네이버블로그/카카오)·응모하기·다시하기·닫기까지 모든 상호작용에 data-omni 를 동적 부여 — 사용자 이탈 지점 분석 가능" },
+              { name: "로딩 UX + 모달 상태 방어", desc: "결과 도출 전 3초 로딩 화면에 점 애니메이션 적용, 로딩 중 사용자가 모달을 닫아도 안전하게 분기 처리" },
+            ],
+            link: { 
+              href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/tree/master/module/mbti_game", 
+              label: "GitHub Repository" 
             },
           },
           {
-            name: "통합런칭 — 비스포크 냉장고",
-            link: {
-              href: "https://www.samsung.com/sec/event/bespoke-refrigerator/",
-              label: "samsung.com/sec/event/bespoke-refrigerator",
+            name: "코기 가족 찾기 — 스테이지 기반 숨은 정답 찾기 게임 (JavaScript / jQuery)",
+            desc: "'월리를 찾아라'와 '틀린그림찾기'의 하이브리드 컨셉. 스테이지마다 다른 이미지에서 정답 영역을 클릭해 찾는 구조로, 게임 엔진을 데이터 주도(data-driven) 방식으로 설계해 신규 시즌마다 JSON 교체만으로 새 스테이지를 구성 가능.",
+            subItems: [
+              { name: "레벨·스테이지 진행 구조", desc: "각 스테이지마다 정답 버튼 수·위치·이미지를 JSON으로 정의, 단계별 난이도 차등 적용" },
+              { name: "DOM 사전 생성 + 가시성 토글", desc: "전체 스테이지 중 정답 버튼 최대 개수를 사전 계산해 DOM을 한 번만 생성하고, 스테이지 전환 시 pt_hide 클래스로 보이기/숨기기만 수행 — 매 스테이지마다 DOM을 생성·제거하지 않는 성능 최적화" },
+              { name: "PC/모바일 좌표 분기 데이터 구조", desc: "같은 이미지를 PC·모바일에서 다른 위치에 배치할 수 있도록 좌표 데이터(pc.x/y)를 디바이스 별로 분리, 디자이너와 disabled·enabled 상태별 이미지 노출 규칙과 비율을 협의해 시각 일관성 확보" },
+              { name: "자동 ID 부여 ({stage}-{button})", desc: "기획자·디자이너가 JSON 작성 시 ID를 수동 관리할 필요 없이 스테이지·버튼 인덱스로 자동 생성" },
+              { name: "원본 데이터 불변성 (structuredClone + 깊은 복사)", desc: "게임 재시작 시 첫 상태가 손상 없이 복원되도록 가공 데이터와 원본 데이터를 완전히 분리" },
+            ],
+            link: { 
+              href: "https://github.com/bbakkomm/Work_Tool_vanillaJS/tree/master/module/find_the_difference_game", 
+              label: "GitHub Repository" 
             },
-          },
-          {
-            name: "통합런칭 — 김치냉장고",
-            link: {
-              href: "https://www.samsung.com/sec/event/kimchi-refrigerator/",
-              label: "samsung.com/sec/event/kimchi-refrigerator",
-            },
-          },
-        ],
-      },
-      {
-        title: "삼성닷컴 멤버십 이벤트 게임 제작",
-        projects: [
-          {
-            name: "오 마이 재질테스트",
-            desc: '"MBTI"를 포커스로 트래픽 상승 유도를 위한 프로모션 이벤트 게임 — JavaScript / jQuery',
-          },
-          {
-            name: "코기 가족 찾기",
-            desc: '"월리를 찾아라" 컨셉의 트래픽 유도용 프로모션 게임 — JavaScript / jQuery',
-          },
-        ],
-      },
-      {
-        title: "모듈, 유틸 제작 및 고도화",
-        projects: [
-          {
-            name: "스마트폰 바꿔보상 금액 체크 모듈 (3 Depth)",
-            desc: "기존 소유 중인 갤럭시·아이폰을 신규 구매 스마트폰 가격 할인 프로모션을 위해 제작",
-          },
-          {
-            name: "다중 조건문 모듈",
-            desc: "data-value에 다중 조건을 적용해 고객 요구사항의 유연한 대응을 위해 제작",
-          },
-        ],
-      },
-      {
-        title: "내부 운영 작업 프로세스 시스템 설계",
-        projects: [
-          {
-            name: "Excel to Json",
-            desc: "DB 변경 작업을 JSON으로 관리할 때 발생하는 휴먼 에러를 줄이기 위한 검증 로직과 자동 변경 기능",
-          },
-          {
-            name: "Tool Checker",
-            desc: "DB 내 상품 추가·제거 시 툴과 호환되는 마크업 오류 검증 및 직관적인 에러 위치 파악 도구",
           },
         ],
       },

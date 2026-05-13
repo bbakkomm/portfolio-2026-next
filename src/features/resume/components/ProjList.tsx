@@ -1,8 +1,14 @@
+interface SubItem {
+  name: string;
+  desc?: string;
+}
+
 interface ProjItem {
   name: string;
   desc?: string;
   link?: { href: string; label: string };
   showArrow?: boolean;
+  subItems?: SubItem[];
 }
 
 interface ProjListProps {
@@ -23,15 +29,28 @@ const ProjList = ({ items, className }: ProjListProps) => (
         {item.desc && (
           <div className="text-[15.5px] text-zinc-400 mt-1 leading-[1.7]">{item.desc}</div>
         )}
+        {item.subItems && item.subItems.length > 0 && (
+          <ul className="list-none p-0 m-0 mt-2 ml-3 space-y-1.5">
+            {item.subItems.map((sub, si) => (
+              <li key={si} className="grid grid-cols-[8px_1fr] gap-x-2">
+                <span className="self-center justify-self-center size-0.75 rounded-full bg-zinc-600" />
+                <span className="text-[14.5px] font-medium text-zinc-300 leading-normal">{sub.name}</span>
+                {sub.desc && (
+                  <div className="col-start-2 text-[13.5px] text-zinc-500 mt-0.5 leading-[1.6]">{sub.desc}</div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
         {item.link && (
-          <div className="text-[15.5px] text-zinc-400 mt-1 leading-[1.7]">
+          <div className="mt-2">
             <a
               href={item.link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 border-b border-dashed border-zinc-700 hover:text-pink-400 hover:border-pink-400 transition-colors"
+              className="text-[13px] text-pink-400/60 border-b border-dashed border-pink-400/40 hover:text-pink-400 hover:border-pink-400 transition-colors"
             >
-              {item.link.label}
+              {item.link.label} ↗
             </a>
           </div>
         )}

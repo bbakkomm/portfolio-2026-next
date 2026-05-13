@@ -16,6 +16,11 @@ const ResumeExperience = () => (
             role={exp.role}
             stack={exp.stack}
           />
+          {exp.summary && (
+            <blockquote className="border-l-2 border-zinc-700 pl-4 mt-5 mb-10 text-[15px] text-zinc-400 leading-[1.8] break-keep">
+              {exp.summary}
+            </blockquote>
+          )}
 
           <div className="space-y-8">
             {exp.groups.map((group, gi) => (
@@ -31,6 +36,16 @@ const ResumeExperience = () => (
                   </p>
                 )}
                 <ProjList items={group.projects} className="mt-2" />
+                {group.link && (
+                  <a
+                    href={group.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-[13px] text-pink-400/60 border-b border-dashed border-pink-400/40 hover:text-pink-400 hover:border-pink-400 transition-colors"
+                  >
+                    {group.link.label} ↗
+                  </a>
+                )}
               </div>
             ))}
           </div>
