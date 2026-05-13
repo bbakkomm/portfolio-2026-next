@@ -2087,10 +2087,12 @@
   position: relative !important;
 }
 
-/* prose 뷰에서 표 가로 스크롤 허용 */
-.prose table {
-  display: block;
-  overflow-x: auto;
+/* prose 뷰에서 표 가로 스크롤: JS 래퍼(overflow-x-auto) + 테이블 자연 너비 확보 */
+.prose .tiptap.ProseMirror table {
+  table-layout: auto;
+  width: max-content;
+  min-width: 100%;
+  overflow: visible;
 }
 
 /*# sourceMappingURL=editor.css.map */

@@ -17,6 +17,17 @@ export default function DynamicBlogContent({
   useEffect(() => {
     if (!editor) return;
     editor.commands.setContent(contents || "", false);
+
+    requestAnimationFrame(() => {
+      editor.view.dom.querySelectorAll<HTMLTableElement>("table").forEach((table) => {
+        if (table.parentElement?.hasAttribute("data-table-wrap")) return;
+        const wrapper = document.createElement("div");
+        wrapper.setAttribute("data-table-wrap", "");
+        wrapper.className = "overflow-x-auto";
+        table.parentNode!.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+      });
+    });
   }, [editor, contents]);
 
   const handleClick = (e: React.MouseEvent) => {
