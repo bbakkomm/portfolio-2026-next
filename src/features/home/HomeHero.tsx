@@ -97,7 +97,7 @@ export default function HomeHero({ recentProjects }: { recentProjects: ProjectMe
                       animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
                       transition={{ delay: 1.1 + i * 0.03, duration: 0.4, ease: "easeOut" }}
                     >
-                      {ch === " " ? " " : ch}
+                      {ch === " " ? " " : ch}
                     </motion.span>
                   ))}
                 </div>
