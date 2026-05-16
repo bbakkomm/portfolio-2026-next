@@ -428,7 +428,7 @@ export const EXPERIENCE: Company[] = [
   {
     company: "이음소프트 — 개발팀 주임",
     meta: "2017.10 — 2018.12 · 1년 3개월",
-    role: "PHP 개발",
+    role: "퍼블리싱, PHP 개발",
     stack: "JavaScript, PHP, MySQL, phpMyAdmin",
     summary: "첫 직장으로 PHP·MySQL 기반의 클라이언트 사이트 런칭·이관·데이터 마이그레이션을 단독 진행. 1년 3개월간 병원·학회·프랜차이즈·제조 기업 등 15개 이상 도메인의 사이트를 다뤘으며, 디자이너·기획자·대표자와 직접 커뮤니케이션하며 요구를 받아 클라이언트 응대 → 설계 → 개발 → 운영 인계까지 한 사람이 책임지는 형태. 다국어(KOR·ENG·CHN·JPN), 카카오맵·SMS·Vimeo 등 외부 API 연동, Gnuboard 커스터마이징, 비개발자 운영자가 직접 다룰 수 있는 어드민 UI 설계 등을 반복 경험하며 작은 단위 풀스택 운영 역량을 쌓음.",
     groups: [
