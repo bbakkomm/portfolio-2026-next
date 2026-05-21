@@ -72,6 +72,7 @@ export default function HomeHero({ recentProjects }: { recentProjects: ProjectMe
           >
             {/* 그라데이션 오버레이 */}
             <div className="absolute inset-0 w-full h-full bg-linear-to-b from-transparent via-[#171717]/70 to-[#171717] z-20" />
+            <div className="absolute bg-[#171717] w-full h-[500px] top-[99%]"></div>
           </div>
           <FallingStarsEffect />
         </motion.div>
