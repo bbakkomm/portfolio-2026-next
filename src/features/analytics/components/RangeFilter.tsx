@@ -8,9 +8,6 @@ const PRESETS = [
   { label: "90일", days: 90 },
 ] as const;
 
-function toISODate(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
 
 export function RangeFilter() {
   const router = useRouter();
@@ -42,10 +39,3 @@ export function RangeFilter() {
   );
 }
 
-/** searchParams에서 날짜 범위를 계산해 반환하는 유틸 (서버 컴포넌트용) */
-export function resolveRange(days: number): { from: string; to: string } {
-  const to = new Date();
-  const from = new Date();
-  from.setDate(from.getDate() - (days - 1));
-  return { from: toISODate(from), to: toISODate(to) };
-}

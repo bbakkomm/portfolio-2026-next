@@ -11,7 +11,14 @@ import {
   getDeviceBreakdown,
   getBrowserBreakdown,
 } from "@/features/analytics/api/analytics-queries";
-import { resolveRange, RangeFilter } from "@/features/analytics/components/RangeFilter";
+import { RangeFilter } from "@/features/analytics/components/RangeFilter";
+
+function resolveRange(days: number): { from: string; to: string } {
+  const to = new Date();
+  const from = new Date();
+  from.setDate(from.getDate() - (days - 1));
+  return { from: from.toISOString().slice(0, 10), to: to.toISOString().slice(0, 10) };
+}
 import { AnalyticsOverviewCards } from "@/features/analytics/components/AnalyticsOverviewCards";
 import { DailyTrend } from "@/features/analytics/components/DailyTrend";
 import { TopPathsTable } from "@/features/analytics/components/TopPathsTable";
