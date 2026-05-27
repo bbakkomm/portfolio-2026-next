@@ -39,3 +39,20 @@ export interface BreakdownRow {
   label: string;
   count: number;
 }
+
+// ─── 이벤트 ─────────────────────────────────────────────────
+
+export interface AnalyticsEvent {
+  id: string;
+  visitor_id: string;
+  session_id: string;
+  path: string;
+  name: string;
+  properties: Record<string, unknown> | null;
+  created_at: string;
+}
+
+export interface EventBreakdownRow {
+  name: string;
+  count: number;
+}

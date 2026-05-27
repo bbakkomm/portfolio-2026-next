@@ -10,6 +10,7 @@ import {
   getGeoBreakdown,
   getDeviceBreakdown,
   getBrowserBreakdown,
+  getTopEvents,
 } from "@/features/analytics/api/analytics-queries";
 import { RangeFilter } from "@/features/analytics/components/RangeFilter";
 
@@ -23,6 +24,7 @@ import { AnalyticsOverviewCards } from "@/features/analytics/components/Analytic
 import { DailyTrend } from "@/features/analytics/components/DailyTrend";
 import { TopPathsTable } from "@/features/analytics/components/TopPathsTable";
 import { BreakdownTable } from "@/features/analytics/components/BreakdownTable";
+import { EventBreakdownTable } from "@/features/analytics/components/EventBreakdownTable";
 import { Button } from "@/shared/ui/button";
 import AdminProjectRow from "@/features/project/ProjectEditor/AdminProjectRow";
 import AdminBlogRow from "@/features/blog/BlogEditor/AdminBlogRow";
@@ -40,7 +42,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const days = Math.min(Math.max(parseInt(daysStr ?? "30", 10) || 30, 7), 90);
   const range = resolveRange(days);
 
-  const [projects, blogPosts, categories, overview, trend, topPaths, referrers, geos, devices, browsers] =
+  const [projects, blogPosts, categories, overview, trend, topPaths, referrers, geos, devices, browsers, events] =
     await Promise.all([
       getProjectsForAdmin(),
       getBlogListForAdmin(),
@@ -52,6 +54,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
       getGeoBreakdown(range),
       getDeviceBreakdown(range),
       getBrowserBreakdown(range),
+      getTopEvents(range),
     ]);
 
   const pinOrderMap = new Map(
@@ -132,6 +135,8 @@ export default async function AdminPage({ searchParams }: PageProps) {
               <BreakdownTable title="디바이스" data={devices} />
               <BreakdownTable title="브라우저" data={browsers} />
             </div>
+
+            <EventBreakdownTable data={events} />
           </div>
         }
       />

@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { isbot } from "isbot";
@@ -22,24 +23,37 @@ const leaveSchema = z.object({
   durationMs: z.number().int().min(0).max(86_400_000),
 });
 
-const bodySchema = z.discriminatedUnion("action", [enterSchema, leaveSchema]);
+const eventSchema = z.object({
+  action: z.literal("event"),
+  eventId: z.string().uuid(),
+  path: z.string().max(1000).startsWith("/"),
+  name: z.string().min(1).max(100),
+  properties: z.record(z.string(), z.unknown()).optional(),
+});
+
+const bodySchema = z.discriminatedUnion("action", [enterSchema, leaveSchema, eventSchema]);
+
+function hashIP(ip: string): string {
+  const day = new Date().toISOString().slice(0, 10); // 일별 salt — 역추적 불가
+  return createHash("sha256").update(`${day}:${ip}`).digest("hex").slice(0, 16);
+}
+
+function getIP(req: NextRequest): string | null {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("x-real-ip");
+}
 
 function cookieHeader(cookies: { name: string; value: string; maxAge: number }[]): string {
   return cookies
-    .map(
-      (c) =>
-        `${c.name}=${c.value}; Path=/; Max-Age=${c.maxAge}; HttpOnly; SameSite=Lax`,
-    )
+    .map((c) => `${c.name}=${c.value}; Path=/; Max-Age=${c.maxAge}; HttpOnly; SameSite=Lax`)
     .join(", ");
 }
 
 export async function POST(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
 
-  // 봇 요청 무시 (200 반환, insert 스킵)
-  if (isbot(ua)) {
-    return NextResponse.json({ ok: true }, { status: 200 });
-  }
+  if (isbot(ua)) return NextResponse.json({ ok: true });
 
   let body: unknown;
   try {
@@ -55,9 +69,10 @@ export async function POST(req: NextRequest) {
 
   const data = parsed.data;
   const supabase = createServiceClient();
+  const { visitorId, sessionId, setCookies } = await resolveVisitor();
 
+  // ── enter ────────────────────────────────────────────────
   if (data.action === "enter") {
-    const { visitorId, sessionId, setCookies } = await resolveVisitor();
     const { device, browser, os } = parseUA(ua);
 
     const siteHost = process.env.NEXT_PUBLIC_SITE_URL
@@ -69,6 +84,9 @@ export async function POST(req: NextRequest) {
     const region = req.headers.get("x-vercel-ip-country-region") ?? null;
     const rawCity = req.headers.get("x-vercel-ip-city") ?? null;
     const city = rawCity ? decodeURIComponent(rawCity) : null;
+
+    const rawIP = getIP(req);
+    const ip_hash = rawIP ? hashIP(rawIP) : null;
 
     await supabase.from("page_view").insert({
       id: data.viewId,
@@ -83,21 +101,36 @@ export async function POST(req: NextRequest) {
       device_type: device,
       browser,
       os,
+      ip_hash,
     });
 
     const res = NextResponse.json({ ok: true });
-    if (setCookies.length > 0) {
-      res.headers.set("Set-Cookie", cookieHeader(setCookies));
-    }
+    if (setCookies.length > 0) res.headers.set("Set-Cookie", cookieHeader(setCookies));
     return res;
   }
 
-  // action === "leave"
-  await supabase
-    .from("page_view")
-    .update({ duration_ms: data.durationMs })
-    .eq("id", data.viewId)
-    .is("duration_ms", null); // 최초 leave만 기록
+  // ── leave ────────────────────────────────────────────────
+  if (data.action === "leave") {
+    await supabase
+      .from("page_view")
+      .update({ duration_ms: data.durationMs })
+      .eq("id", data.viewId)
+      .is("duration_ms", null);
 
-  return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true });
+  }
+
+  // ── event ────────────────────────────────────────────────
+  await supabase.from("event").insert({
+    id: data.eventId,
+    visitor_id: visitorId,
+    session_id: sessionId,
+    path: data.path,
+    name: data.name,
+    properties: data.properties ?? null,
+  });
+
+  const res = NextResponse.json({ ok: true });
+  if (setCookies.length > 0) res.headers.set("Set-Cookie", cookieHeader(setCookies));
+  return res;
 }
