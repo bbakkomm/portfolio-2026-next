@@ -42,11 +42,9 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const days = Math.min(Math.max(parseInt(daysStr ?? "30", 10) || 30, 7), 90);
   const range = resolveRange(days);
 
-  const [projects, blogPosts, categories, overview, trend, topPaths, referrers, geos, devices, browsers, events] =
-    await Promise.all([
-      getProjectsForAdmin(),
-      getBlogListForAdmin(),
-      getAllCategories(),
+  const [[projects, blogPosts, categories], analyticsResult] = await Promise.all([
+    Promise.all([getProjectsForAdmin(), getBlogListForAdmin(), getAllCategories()]),
+    Promise.all([
       getAnalyticsOverview(range),
       getDailyTrend(range),
       getTopPaths(range),
@@ -55,7 +53,21 @@ export default async function AdminPage({ searchParams }: PageProps) {
       getDeviceBreakdown(range),
       getBrowserBreakdown(range),
       getTopEvents(range),
-    ]);
+    ]).catch(() => null),
+  ]);
+
+  const [overview, trend, topPaths, referrers, geos, devices, browsers, events] =
+    analyticsResult ?? [
+      { pageViews: 0, uniqueVisitors: 0, sessions: 0, avgDurationMs: 0 },
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+  const analyticsUnavailable = analyticsResult === null;
 
   const pinOrderMap = new Map(
     projects
@@ -123,6 +135,12 @@ export default async function AdminPage({ searchParams }: PageProps) {
                 <RangeFilter />
               </Suspense>
             </div>
+
+            {analyticsUnavailable && (
+              <p className="text-sm text-amber-400 bg-amber-400/10 border border-amber-400/30 rounded-lg px-4 py-3">
+                SUPABASE_SERVICE_ROLE_KEY 환경변수가 설정되지 않아 통계를 불러올 수 없습니다.
+              </p>
+            )}
 
             <AnalyticsOverviewCards data={overview} />
 
