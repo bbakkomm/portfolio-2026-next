@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "radix-ui", "date-fns"],
+    optimizePackageImports: ["lucide-react", "radix-ui", "date-fns", "recharts"],
   },
 };
 

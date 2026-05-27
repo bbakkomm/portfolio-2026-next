@@ -1,3 +1,15 @@
+"use client";
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import type { DailyTrendRow } from "@/entities/analytics/model";
 
 interface Props {
@@ -5,35 +17,28 @@ interface Props {
 }
 
 export function DailyTrend({ data }: Props) {
-  const maxPv = Math.max(...data.map((d) => d.pv), 1);
-
   return (
     <div>
-      <h3 className="text-sm font-medium text-foreground/70 mb-3">일별 방문 추이 (PV / UV)</h3>
-      <div className="space-y-1 max-h-72 overflow-y-auto pr-1">
-        {data.map((row) => (
-          <div key={row.date} className="flex items-center gap-2 text-xs">
-            <span className="w-24 shrink-0 text-foreground/50 tabular-nums">{row.date}</span>
-            <div className="flex-1 flex items-center gap-1">
-              <div
-                className="h-3 rounded-sm bg-indigo-500/80 transition-all"
-                style={{ width: `${(row.pv / maxPv) * 100}%`, minWidth: row.pv > 0 ? "2px" : "0" }}
-              />
-              <div
-                className="h-3 rounded-sm bg-emerald-500/60 transition-all"
-                style={{ width: `${(row.uv / maxPv) * 100}%`, minWidth: row.uv > 0 ? "2px" : "0" }}
-              />
-            </div>
-            <span className="w-16 shrink-0 tabular-nums text-right text-foreground/70">
-              {row.pv} / {row.uv}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-4 mt-2 text-xs text-foreground/40">
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-2 rounded-sm bg-indigo-500/80" /> PV</span>
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-2 rounded-sm bg-emerald-500/60" /> UV</span>
-      </div>
+      <h3 className="text-sm font-medium text-foreground/70 mb-4">일별 방문 추이 (PV / UV)</h3>
+      <ResponsiveContainer width="100%" height={240}>
+        <LineChart data={data} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
+          <XAxis
+            dataKey="date"
+            tick={{ fontSize: 11, fill: "#71717a" }}
+            tickFormatter={(v) => v.slice(5)}
+          />
+          <YAxis tick={{ fontSize: 11, fill: "#71717a" }} allowDecimals={false} />
+          <Tooltip
+            contentStyle={{ backgroundColor: "#1c1c1e", border: "1px solid #3f3f46", borderRadius: 6 }}
+            labelStyle={{ color: "#a1a1aa", fontSize: 11 }}
+            itemStyle={{ fontSize: 12 }}
+          />
+          <Legend wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
+          <Line type="monotone" dataKey="pv" name="PV" stroke="#6366f1" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+          <Line type="monotone" dataKey="uv" name="UV" stroke="#10b981" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
