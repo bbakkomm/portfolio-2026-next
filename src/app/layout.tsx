@@ -8,6 +8,7 @@ import { TooltipProvider } from "@/shared/ui/tooltip";
 import { GsapProvider } from "@/shared/providers/gsap-provider";
 import TopButton from "@/shared/components/top-button";
 import { ScrollReset } from "@/shared/components/scroll-reset";
+import { AnalyticsTracker } from "@/features/analytics/AnalyticsTracker";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://psh-portfolio.vercel.app";
 
@@ -77,6 +78,7 @@ export default function RootLayout({
             <TooltipProvider>
               <MSWInitializer />
               <ScrollReset />
+              <AnalyticsTracker />
               {children}
               <Toaster richColors theme="dark" />
               <TopButton />

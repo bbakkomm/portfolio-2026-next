@@ -1,6 +1,21 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { getProjectsForAdmin } from "@/features/project/api/project-queries";
 import { getBlogListForAdmin, getAllCategories } from "@/features/blog/api/blog-queries";
+import {
+  getAnalyticsOverview,
+  getDailyTrend,
+  getTopPaths,
+  getReferrerBreakdown,
+  getGeoBreakdown,
+  getDeviceBreakdown,
+  getBrowserBreakdown,
+} from "@/features/analytics/api/analytics-queries";
+import { resolveRange, RangeFilter } from "@/features/analytics/components/RangeFilter";
+import { AnalyticsOverviewCards } from "@/features/analytics/components/AnalyticsOverviewCards";
+import { DailyTrend } from "@/features/analytics/components/DailyTrend";
+import { TopPathsTable } from "@/features/analytics/components/TopPathsTable";
+import { BreakdownTable } from "@/features/analytics/components/BreakdownTable";
 import { Button } from "@/shared/ui/button";
 import AdminProjectRow from "@/features/project/ProjectEditor/AdminProjectRow";
 import AdminBlogRow from "@/features/blog/BlogEditor/AdminBlogRow";
@@ -9,12 +24,28 @@ import AdminTabs from "./components/AdminTabs";
 
 export const metadata = { title: "Admin" };
 
-export default async function AdminPage() {
-  const [projects, blogPosts, categories] = await Promise.all([
-    getProjectsForAdmin(),
-    getBlogListForAdmin(),
-    getAllCategories(),
-  ]);
+interface PageProps {
+  searchParams: Promise<{ days?: string }>;
+}
+
+export default async function AdminPage({ searchParams }: PageProps) {
+  const { days: daysStr } = await searchParams;
+  const days = Math.min(Math.max(parseInt(daysStr ?? "30", 10) || 30, 7), 90);
+  const range = resolveRange(days);
+
+  const [projects, blogPosts, categories, overview, trend, topPaths, referrers, geos, devices, browsers] =
+    await Promise.all([
+      getProjectsForAdmin(),
+      getBlogListForAdmin(),
+      getAllCategories(),
+      getAnalyticsOverview(range),
+      getDailyTrend(range),
+      getTopPaths(range),
+      getReferrerBreakdown(range),
+      getGeoBreakdown(range),
+      getDeviceBreakdown(range),
+      getBrowserBreakdown(range),
+    ]);
 
   const pinOrderMap = new Map(
     projects
@@ -71,6 +102,28 @@ export default async function AdminPage() {
                   ))}
                 </ul>
               )}
+            </div>
+          </div>
+        }
+        analyticsContent={
+          <div className="pt-6 flex flex-col gap-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl">방문자 통계</h2>
+              <Suspense>
+                <RangeFilter />
+              </Suspense>
+            </div>
+
+            <AnalyticsOverviewCards data={overview} />
+
+            <DailyTrend data={trend} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <TopPathsTable data={topPaths} total={overview.pageViews} />
+              <BreakdownTable title="유입 경로" data={referrers} />
+              <BreakdownTable title="국가" data={geos} />
+              <BreakdownTable title="디바이스" data={devices} />
+              <BreakdownTable title="브라우저" data={browsers} />
             </div>
           </div>
         }
