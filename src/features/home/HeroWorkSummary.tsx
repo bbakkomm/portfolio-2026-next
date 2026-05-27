@@ -17,6 +17,8 @@ export default function HeroWorkSummary({ projects }: { projects: ProjectMeta[] 
             key={`${p.id}:${idx}`}
             href={`${ROUTES.WORK}/${p.id}`}
             className="hover:underline flex flex-col gap-1"
+            data-track="hero_work_summary"
+            data-track-props={JSON.stringify({ id: p.id, title: p.title })}
           >
             <p className="inline-flex items-center">
               <span className="line-clamp-1 text-sm md:text-xs max-w-[calc(100%-20px)] text-zinc-200">

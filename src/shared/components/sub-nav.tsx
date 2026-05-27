@@ -12,11 +12,13 @@ const MY_LINKS = [
     to: "https://open.kakao.com/o/sYDa1Jsi",
     src: "/svg/kakao.svg",
     label: "오픈 카카오톡",
+    track: "hero_kakao",
   },
   {
     to: "https://github.com/bbakkomm",
     src: "/svg/giticon.svg",
     label: "GitHub",
+    track: "hero_github",
   },
 ];
 
@@ -32,6 +34,7 @@ export default function SubNav() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
+                data-track={btn.track}
               >
                 <img
                   src={btn.src}

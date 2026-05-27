@@ -91,6 +91,7 @@ const GNBNavList = () => {
             aria-label="메뉴 닫기"
             onClick={closeMenu}
             className="cursor-pointer"
+            data-track="gnb_mobile_close"
           >
             <X className="size-8" aria-hidden="true" />
           </button>
@@ -106,6 +107,7 @@ const GNBNavList = () => {
                   "text-4xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors tracking-wide",
                   e.path === pathname && "text-pink-400 underline"
                 )}
+                data-track={`gnb_mobile_nav_${e.pathName.toLowerCase()}`}
                 onClick={() => {
                   if (e.path === pathname) return;
                   if (!e.AuthPage || authentication) {
@@ -121,6 +123,7 @@ const GNBNavList = () => {
           {authentication && (
             <span
               className="text-4xl font-montserrat cursor-pointer hover:text-pink-400 transition-colors tracking-wide"
+              data-track="gnb_mobile_logout"
               onClick={async () => {
                 await mutateAsync();
                 removeAuth();
@@ -139,7 +142,7 @@ const GNBNavList = () => {
         className="grid grid-cols-[auto_1fr] gap-20 py-1 w-full"
         ref={headerRef}
       >
-        <button onClick={() => router.push("/")}>Psh&apos; Portfolio</button>
+        <button onClick={() => router.push("/")} data-track="gnb_logo">Psh&apos; Portfolio</button>
         <div className="gap-10 md:flex hidden w-full">
           {NAVPAGE_OBJECT.map((e, idx) => {
             if (e.AuthPage && !authentication) return null;
@@ -152,6 +155,7 @@ const GNBNavList = () => {
                   e.path.split("/")[1] === pathname.split("/")[1] &&
                     "border-b opacity-100"
                 )}
+                data-track={`gnb_nav_${e.pathName.toLowerCase()}`}
                 onClick={() => router.push(e.path)}
               >
                 {e.pathName}
@@ -167,6 +171,7 @@ const GNBNavList = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
+                    data-track="gnb_kakao"
                   >
                     <img
                       src="/svg/kakao.svg"
@@ -194,6 +199,7 @@ const GNBNavList = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group p-2 rounded-lg border border-zinc-50/10 hover:border-zinc-50/30 transition-all"
+                    data-track="gnb_github"
                   >
                     <img
                       src="/svg/giticon.svg"
@@ -215,6 +221,7 @@ const GNBNavList = () => {
             </TooltipProvider>
             {authentication && (
               <div
+                data-track="gnb_logout"
                 onClick={async () => {
                   await mutateAsync();
                   removeAuth();
@@ -236,6 +243,7 @@ const GNBNavList = () => {
           aria-expanded={view}
           className="group cursor-pointer relative items-center justify-center md:hidden flex ml-auto"
           onClick={openMenu}
+          data-track="gnb_mobile_open"
         >
           {/* 메인 버튼 */}
           <div className="relative size-full rounded-lg backdrop-blur-sm flex items-center justify-center group-hover:border-slate-400/70 transition-all duration-300">

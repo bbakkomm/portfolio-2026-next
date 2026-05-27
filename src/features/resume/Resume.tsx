@@ -37,6 +37,7 @@ const Resume = () => {
               <Link
                 href={ROUTES.WORK}
                 className="text-sl px-5 py-3 flex gap-2 items-center underline underline-offset-4 text-zinc-400 hover:text-zinc-50 transition-colors"
+                data-track="resume_project_list_cta"
               >
                 프로젝트 리스트 보기 <ChevronRight size={12} />
               </Link>

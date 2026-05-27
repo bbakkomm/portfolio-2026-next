@@ -34,6 +34,8 @@ function ProjectCard({ project, index }: { project: ProjectMeta; index: number }
       <Link
         href={`${ROUTES.WORK}/${project.id}`}
         className="group relative flex flex-col gap-3 transition-all duration-500 hover:opacity-95"
+        data-track="project_card"
+        data-track-props={JSON.stringify({ id: project.id, title: project.title })}
       >
         <div className="flex flex-col justify-center gap-2 mb-4 lg:mb-10">
           {project.thumbnail && (
@@ -196,6 +198,7 @@ export default function ProjectListView({
                     aria-label="검색어 지우기"
                     onClick={() => setSearchQuery("")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                    data-track="project_search_clear"
                   >
                     <X aria-hidden="true" className="size-3.5" />
                   </button>
@@ -208,6 +211,7 @@ export default function ProjectListView({
                   type="button"
                   aria-label="스택 필터"
                   onClick={() => setShowFilters((v) => !v)}
+                  data-track="project_filter_toggle"
                   className={cn(
                     "lg:hidden relative flex items-center justify-center p-2 rounded-lg border transition-colors shrink-0",
                     showFilters || selectedStack
@@ -232,6 +236,8 @@ export default function ProjectListView({
                     <button
                       key={stack}
                       onClick={() => setSelectedStack(isActive ? null : stack)}
+                      data-track="project_filter_stack"
+                      data-track-props={JSON.stringify({ stack })}
                       className={cn(
                         "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md border transition-colors",
                         isActive

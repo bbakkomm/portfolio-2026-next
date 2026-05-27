@@ -37,6 +37,8 @@ export default function ProjectPinnedSection({ projects }: { projects: ProjectMe
             <Link
               key={project.id}
               href={`${ROUTES.WORK}/${project.id}`}
+              data-track="pinned_project"
+              data-track-props={JSON.stringify({ id: project.id, title: project.title })}
               className={cn(
                 "group grid grid-cols-[1fr_2fr] lg:grid-cols-[2fr_2fr] gap-4 lg:gap-10 w-full rounded-xl transition-all duration-500"
               )}

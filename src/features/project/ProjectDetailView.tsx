@@ -95,6 +95,7 @@ function ProjectMeta({
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-pink-300 hover:text-pink-400"
+            data-track="project_detail_deploy_url"
           >
             <Link2 size={16} className="rotate-135" />
             <span className="line-clamp-1 max-w-[400px] text-sm underline">링크 바로가기</span>
@@ -176,6 +177,7 @@ export default function ProjectDetailView({ project }: { project: ProjectDetailF
         <Link
           href={ROUTES.WORK}
           className="flex items-center text-sm gap-2 hover:text-indigo-300 text-zinc-400"
+          data-track="project_detail_back"
         >
           <ChevronLeft className="w-4 h-4" />
           뒤로가기

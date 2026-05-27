@@ -108,6 +108,7 @@ export default function HomeAbout({ children }: { children?: ReactNode }) {
                 <Link
                   href={ROUTES.RESUME}
                   className="inline-flex items-center gap-2 border border-zinc-600 text-zinc-300 hover:border-zinc-300 hover:text-zinc-50 rounded-lg px-5 py-4 text-sm transition-colors"
+                  data-track="home_about_me_cta"
                 >
                   About me
                   <ChevronRight className="size-4" />

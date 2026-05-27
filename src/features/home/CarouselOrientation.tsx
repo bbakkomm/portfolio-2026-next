@@ -66,6 +66,7 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
           "hidden lg:block z-20 p-2 rounded-full absolute top-1/2 -translate-y-1/2 -left-14",
           !canScrollPrev && "opacity-30 pointer-events-none"
         )}
+        data-track="carousel_prev"
       >
         <ChevronLeft className="size-10 text-zinc-50/80" strokeWidth={1} />
       </button>
@@ -75,6 +76,7 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
           "hidden lg:block z-20 p-2 rounded-full absolute top-1/2 -translate-y-1/2 -right-14",
           !canScrollNext && "opacity-30 pointer-events-none"
         )}
+        data-track="carousel_next"
       >
         <ChevronRight className="size-10 text-zinc-50/80" strokeWidth={1} />
       </button>
@@ -90,6 +92,8 @@ export default function CarouselOrientation({ projects }: { projects: ProjectMet
               <div key={project.id} className="flex-none w-full">
                 <Link
                   href={`${ROUTES.WORK}/${project.id}`}
+                  data-track="carousel_project"
+                  data-track-props={JSON.stringify({ id: project.id, title: project.title })}
                   className={cn(
                     "group cursor-pointer grid md:grid-cols-[2fr_2fr] md:items-center gap-10 w-full rounded-xl transition-all duration-500",
                     isActive ? "opacity-100 grayscale-0" : "opacity-50 grayscale"
